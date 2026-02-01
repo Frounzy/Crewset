@@ -2,7 +2,7 @@
 
 import { Menu } from 'lucide-react'
 import { Button } from '@/components/ui/button'
-import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
+import { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetHeader } from '@/components/ui/sheet'
 import { Sidebar } from '@/components/dashboard/sidebar'
 import { useEffect, useState } from 'react'
 
