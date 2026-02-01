@@ -1,5 +1,4 @@
 import createNextIntlPlugin from 'next-intl/plugin';
-import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from 'next';
 
 const withNextIntl = createNextIntlPlugin('./src/i18n.ts');
@@ -27,11 +26,4 @@ const nextConfig: NextConfig = {
   serverExternalPackages: ['iyzipay'],
 };
 
-export default withSentryConfig(
-  withNextIntl(nextConfig),
-  {
-    org: "crewset",
-    project: "crewset-saas",
-    silent: !process.env.CI,
-  }
-);
+export default withNextIntl(nextConfig);
