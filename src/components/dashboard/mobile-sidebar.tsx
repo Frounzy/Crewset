@@ -25,7 +25,9 @@ export function MobileSidebar() {
         </Button>
       </SheetTrigger>
       <SheetContent side="left" className="p-0 bg-background/80 backdrop-blur-xl border-r border-border">
-        <SheetTitle className="sr-only">Menu</SheetTitle>
+        <SheetHeader className="sr-only">
+          <SheetTitle>Menu</SheetTitle>
+        </SheetHeader>
         <Sidebar />
       </SheetContent>
     </Sheet>
