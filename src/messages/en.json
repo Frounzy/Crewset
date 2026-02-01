@@ -1,0 +1,453 @@
+{
+  "Landing": {
+    "Portfolio": {
+      "title": "Create your professional portfolio page in minutes.",
+      "description": "Manage your clients and contracts with Crewset, while also creating your public personal portfolio page.",
+      "feature1": "Custom URL for your username ( /username )",
+      "feature2": "Public profile showcasing your services and yourself",
+      "feature3": "Send a single link to clients",
+      "cta": "Create Your Portfolio",
+      "subNote": "Free • No setup required"
+    },
+    "HowItWorks": {
+      "title": "Track contracts with Crewset in 3 steps",
+      "subtitle": "No setup. No training. Start using in 5 minutes.",
+      "step1Title": "Add your client",
+      "step1Desc": "Enter client details, gather all relationships in one panel.",
+      "step2Title": "Define your contract",
+      "step2Desc": "Enter start date, end date, and contract value.",
+      "step3Title": "Crewset alerts you automatically",
+      "step3Desc": "Get notified via dashboard and email when end dates approach.",
+      "note": "Alerts work both visually and via email."
+    },
+    "Trust": {
+      "title": "Built for Freelancers and Agencies",
+      "card1": "GDPR compliant data deletion (account + all data)",
+      "card2": "Real contract reminders (mail + panel)",
+      "card3": "Secure payment with Stripe & Iyzico",
+      "card4": "No setup required, works in browser"
+    }
+  },
+  "Navbar": {
+    "features": "Features",
+    "pricing": "Pricing",
+    "faq": "FAQ",
+    "login": "Login",
+    "getStarted": "Get Started"
+  },
+  "Hero": {
+    "badge": "Protect your recurring revenue",
+    "title": "Never Miss a <span class='text-primary'>Contract Renewal</span> Again",
+    "description": "The all-in-one platform for freelancers and agencies to track contracts, automate reminders, and visualize revenue at risk.",
+    "startForFree": "Start for Free",
+    "learnMore": "Learn More"
+  },
+  "Features": {
+    "title": "Everything you need to scale",
+    "description": "Crewset gives you the tools to manage your client relationships and secure your future revenue.",
+    "items": {
+      "smartReminders": {
+        "title": "Smart Reminders",
+        "description": "Get automated notifications before contracts expire so you can negotiate renewals in time."
+      },
+      "revenueProtection": {
+        "title": "Revenue Protection",
+        "description": "Visualize how much revenue is at risk each month and prioritize your renewal efforts."
+      },
+      "clientManagement": {
+        "title": "Client Management",
+        "description": "Keep all your client details, notes, and contract history in one organized place."
+      },
+      "contractTracking": {
+        "title": "Contract Tracking",
+        "description": "Track start dates, end dates, values, and renewal probabilities for every engagement."
+      },
+      "performanceReports": {
+        "title": "Performance Reports",
+        "description": "Analyze your renewal rates and lost revenue to improve your agency's performance."
+      },
+      "timeSaving": {
+        "title": "Time Saving",
+        "description": "Stop using spreadsheets. Automate your contract management workflow today."
+      }
+    }
+  },
+  "Pricing": {
+    "title": "Simple, transparent pricing",
+    "description": "Start for free and upgrade as your agency grows. No credit card required for free tier.",
+    "mostPopular": "Most Popular",
+    "perMonth": "/mo",
+    "getStarted": "Get Started",
+    "plans": {
+      "free": {
+        "name": "Free",
+        "description": "Perfect for getting started",
+        "features": {
+          "0": "Up to 3 clients",
+          "1": "Up to 5 contracts",
+          "2": "Basic reminders"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "For growing freelancers",
+        "features": {
+          "0": "Unlimited clients",
+          "1": "Unlimited contracts",
+          "2": "Revenue at risk dashboard",
+          "3": "Renewal probability",
+          "4": "Reports"
+        }
+      },
+      "agency": {
+        "name": "Agency",
+        "description": "For small teams",
+        "features": {
+          "0": "Team access (up to 3 users)",
+          "1": "Advanced reminders",
+          "2": "Priority support"
+        }
+      }
+    }
+  },
+  "FAQ": {
+    "title": "Frequently Asked Questions",
+    "description": "Clear answers to your questions. Don't leave your business to chance.",
+    "items": {
+      "item1": {
+        "question": "How is this different from Excel or Calendar?",
+        "answer": "Excel won't email you saying 'Contract ending, call now!'. Crewset automatically tracks expiration dates and notifies you in time. You stop missing renewal opportunities and protect your recurring revenue."
+      },
+      "item2": {
+        "question": "How does this help me earn more money?",
+        "answer": "Every forgotten contract is lost revenue. Crewset ensures you contact clients at the perfect time to renew. Saving just one contract pays for the platform many times over."
+      },
+      "item3": {
+        "question": "Is it hard to use? Do I need technical skills?",
+        "answer": "Not at all. Unlike complex CRMs, we only give you what you need. Add a client, set the date, and let us handle the rest. You can move your entire workflow to the dashboard in 5 minutes."
+      },
+      "item4": {
+        "question": "Is my data and payment secure?",
+        "answer": "Absolutely. Payments are processed via world-class secure infrastructure. Your client and contract data is stored on encrypted servers and is accessible only by you."
+      },
+      "item5": {
+        "question": "Can I cancel if I'm not satisfied?",
+        "answer": "Of course. No commitments, no hidden fees. You can cancel with one click from your dashboard at any time. We're here only as long as we add value to your business."
+      }
+    }
+  },
+  "Footer": {
+    "product": "Product",
+    "legal": "Legal",
+    "connect": "Connect",
+    "tagline": "Protecting revenue for freelancers and agencies worldwide.",
+    "rights": "All rights reserved.",
+    "links": {
+      "features": "Features",
+      "pricing": "Pricing",
+      "roadmap": "Roadmap",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "refund": "Refund Policy",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn",
+      "contact": "Contact"
+    }
+  },
+  "Legal": {
+    "Privacy": {
+      "title": "Privacy Policy"
+    },
+    "Terms": {
+      "title": "Terms of Service"
+    },
+    "Refund": {
+      "title": "Refund Policy"
+    }
+  },
+  "Support": {
+    "title": "How can we help?",
+    "description": "We are here to answer your questions and solve your problems.",
+    "email": {
+      "title": "Email Us",
+      "description": "We usually respond within 24 hours."
+    },
+    "faq": {
+      "title": "Check FAQ",
+      "description": "Find quick answers to common questions.",
+      "button": "Go to FAQ"
+    },
+    "form": {
+      "title": "Contact Support",
+      "description": "Fill out the form below and we'll get back to you as soon as possible.",
+      "name": "Name",
+      "namePlaceholder": "John Doe",
+      "email": "Email",
+      "emailPlaceholder": "john@example.com",
+      "subject": "Subject",
+      "subjectPlaceholder": "How do I...",
+      "message": "Message",
+      "messagePlaceholder": "Please describe your issue...",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "successTitle": "Message Sent",
+      "success": "We have received your message and will get back to you shortly.",
+      "errorTitle": "Error",
+      "errors": {
+        "validation": "Please check your input.",
+        "send": "Failed to send message. Please try again later."
+      }
+    }
+  },
+  "Auth": {
+    "login": {
+      "title": "Sign in",
+      "description": "Enter your email to sign in to your account",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submit": "Sign In",
+      "submitting": "Signing in...",
+      "orContinueWith": "Or continue with",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign up",
+      "forgotPassword": "Forgot your password?",
+      "backToLogin": "Back to login",
+      "sendResetLink": "Send Reset Link",
+      "updatePassword": "Update Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm Password",
+      "passwordsDoNotMatch": "Passwords do not match",
+      "magicLink": "Sign in with Magic Link",
+      "google": "Sign in with Google",
+      "sendMagicLink": "Send Magic Link",
+      "magicLinkSent": "Check your email for the magic link."
+    },
+    "register": {
+      "title": "Create an account",
+      "description": "Enter your email below to create your account",
+      "submit": "Sign Up",
+      "submitting": "Creating account...",
+      "orContinueWith": "Or continue with",
+      "google": "Sign up with Google",
+      "login": "Login",
+      "alreadyHaveAccount": "Already have an account?"
+    },
+    "errors": {
+      "emailRequired": "Please enter a valid email address.",
+      "passwordRequired": "Password is required.",
+      "passwordLength": "Password must be at least 8 characters."
+    }
+  },
+  "Sidebar": {
+    "dashboard": "Dashboard",
+    "clients": "Clients",
+    "contracts": "Contracts",
+    "reports": "Reports",
+    "billing": "Billing",
+    "settings": "Settings",
+    "team": "Team",
+    "profile": "Profile",
+    "support": "Support"
+  },
+  "Team": {
+    "title": "Team Management",
+    "description": "Manage your organization and team members.",
+    "createOrg": "Create Organization",
+    "createOrgDescription": "Create a new organization to collaborate with your team.",
+    "orgName": "Organization Name",
+    "create": "Create",
+    "members": "Members",
+    "inviteMember": "Add Member",
+    "inviteDescription": "Add a new member to your organization by email.",
+    "email": "Email Address",
+    "role": "Role",
+    "add": "Add",
+    "leaveOrg": "Leave Organization",
+    "owner": "Owner",
+    "member": "Member",
+    "noOrg": "You are not part of any organization.",
+    "currentOrg": "Current Organization",
+    "settings": "Settings",
+    "errorTitle": "Error"
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "totalAnnualRevenue": "Total Annual Revenue",
+    "activeContracts": "Active Contracts",
+    "revenueAtRisk": "Revenue at Risk",
+    "subscriptionPlan": "Subscription Plan",
+    "acrossActiveContracts": "Across {count} active contracts",
+    "totalActiveContracts": "Total active contracts",
+    "contractsExpiringSoon": "{count} contracts expiring in 30 days",
+    "currentPlan": "Current plan: {plan}",
+    "recentActivity": "Recent Activity",
+    "viewAll": "View All",
+    "upgradeToPro": "Upgrade to Pro to see this",
+    "upgrade": "Upgrade"
+  },
+  "UserNav": {
+    "profile": "Profile",
+    "billing": "Billing",
+    "settings": "Settings",
+    "viewSite": "View Site",
+    "logout": "Log out"
+  },
+  "Clients": {
+    "title": "Clients",
+    "addClient": "Add Client",
+    "editClient": "Edit Client",
+    "addDescription": "Add a new client to manage their contracts.",
+    "editDescription": "Make changes to the client profile here.",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "company": "Company",
+      "notes": "Notes",
+      "save": "Save changes"
+    }
+  },
+  "Contracts": {
+    "title": "Contracts",
+    "addContract": "Add Contract",
+    "editContract": "Edit Contract",
+    "addDescription": "Create a new contract to track renewal.",
+    "editDescription": "Update contract details.",
+    "form": {
+      "name": "Contract Name",
+      "client": "Client",
+      "selectClient": "Select a client",
+      "startDate": "Start Date",
+      "endDate": "End Date",
+      "renewalType": "Renewal Type",
+      "valueAmount": "Value Amount",
+      "valuePeriod": "Value Period",
+      "renewalProbability": "Renewal Probability",
+      "notes": "Notes",
+      "save": "Save changes"
+    },
+    "columns": {
+      "name": "Name",
+      "client": "Client",
+      "endDate": "End Date",
+      "value": "Value",
+      "status": "Status"
+    },
+    "monthly": "mo",
+    "yearly": "yr",
+    "status": {
+      "active": "ACTIVE",
+      "expired": "EXPIRED",
+      "renewed": "RENEWED",
+      "lost": "LOST"
+    }
+  },
+  "Billing": {
+    "title": "Billing",
+    "description": "Manage your subscription and billing details.",
+    "manageSubscription": "Manage Subscription",
+    "currentPlan": "Current Plan",
+    "upgrade": "Upgrade",
+    "renew": "Renew Subscription",
+    "downgradeInPortal": "Downgrade in Portal",
+    "perMonth": "/month",
+    "successTitle": "Subscription updated",
+    "successDescription": "Your subscription has been successfully updated.",
+    "canceledTitle": "Canceled",
+    "canceledDescription": "Your subscription update was canceled.",
+    "errorTitle": "Error",
+    "errorDescription": "Something went wrong. Please try again.",
+    "billingInfo": "Invoice Information",
+    "billingInfoDescription": "Enter your company details for invoices.",
+    "billingInfoTitle": "Invoice Information",
+    "billingInfoDesc": "Enter your company details for invoices.",
+    "companyName": "Company Name",
+    "taxId": "Tax ID / TC Identity No",
+    "taxOffice": "Tax Office",
+    "address": "Billing Address",
+    "save": "Save",
+    "saveBillingInfo": "Save Invoice Details",
+    "billingInfoUpdated": "Billing information updated",
+    "unauthorized": "Unauthorized action",
+    "invalidData": "Invalid data"
+  },
+  "Reports": {
+    "title": "Reports",
+    "description": "View your revenue and contract performance.",
+    "comingSoon": "Coming Soon",
+    "comingSoonDesc": "We are working hard to bring you advanced reporting features.",
+    "totalRevenue": "Total Revenue",
+    "revenueByMonth": "Revenue Expiration by Month",
+    "contractStatus": "Contract Status Distribution",
+    "active": "Active",
+    "expired": "Expired",
+    "renewed": "Renewed",
+    "lost": "Lost",
+    "month": "Month",
+    "amount": "Amount",
+    "value": "Value",
+    "count": "Count"
+  },
+  "Settings": {
+    "title": "Settings",
+    "description": "Manage your account settings and preferences.",
+    "dangerZone": "Danger Zone",
+    "dangerZoneDesc": "Irreversible actions for your account.",
+    "deleteAccount": "Delete Account",
+    "deleteAccountDesc": "Permanently delete your account and all of your content.",
+    "deleteAccountConfirmTitle": "Are you absolutely sure?",
+    "general": "General",
+    "appearance": "Appearance",
+    "language": "Language",
+    "theme": "Theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "Profile": {
+    "title": "Profile & Portfolio",
+    "tabs": {
+      "general": "General Info",
+      "portfolio": "Portfolio"
+    },
+    "visibility": {
+      "title": "Public Visibility",
+      "description": "Make your profile visible to the world.",
+      "upgradeToPro": "Upgrade to Pro to publish your profile.",
+      "setUsername": "Set a username below to get your link",
+      "linkCopied": "Link copied to clipboard!",
+      "published": "Published",
+      "unpublished": "Unpublished",
+      "publishedDesc": "Your profile is now live.",
+      "unpublishedDesc": "Your profile is hidden."
+    },
+    "form": {
+      "fullName": "Full Name",
+      "username": "Username (URL)",
+      "title": "Professional Title",
+      "bio": "Bio",
+      "socialLinks": "Social Links",
+      "save": "Save Changes",
+      "saving": "Saving..."
+    },
+    "portfolio": {
+      "addProject": "Add Project",
+      "editProject": "Edit",
+      "deleteProject": "Delete",
+      "title": "Project Title",
+      "description": "Description",
+      "imageUrl": "Image URL",
+      "link": "Project Link",
+      "add": "Add",
+      "cancel": "Cancel",
+      "confirmDelete": "Are you sure you want to delete this item?",
+      "empty": "No projects added yet."
+    },
+    "errors": {
+      "usernameRequired": "You must set a username before publishing your profile.",
+      "customUsernamePro": "Custom usernames are available on Pro plan only.",
+      "updateSuccess": "Profile updated successfully.",
+      "projectAdded": "Project added to portfolio.",
+      "projectDeleted": "Project removed."
+    }
+  }
+}

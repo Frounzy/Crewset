@@ -1,0 +1,42 @@
+export const PLANS = [
+  {
+    name: 'Free',
+    slug: 'free',
+    price: '$0',
+    description: 'Perfect for getting started',
+    features: ['Up to 3 clients', 'Up to 5 contracts', 'Basic reminders'],
+    priceId: '',
+    priceAmount: 0,
+    priceTRY: 0,
+  },
+  {
+    name: 'Pro',
+    slug: 'pro',
+    price: '$19',
+    description: 'For growing freelancers',
+    features: [
+      'Unlimited clients',
+      'Unlimited contracts',
+      'Revenue at risk dashboard',
+      'Renewal probability',
+      'Reports',
+    ],
+    priceId: process.env.NEXT_PUBLIC_STRIPE_PRO_PRICE_ID || '',
+    priceAmount: 19,
+    priceTRY: 650,
+  },
+  {
+    name: 'Agency',
+    slug: 'agency',
+    price: '$39',
+    description: 'For small teams',
+    features: [
+      'Team access (up to 3 users)',
+      'Advanced reminders',
+      'Priority support',
+    ],
+    priceId: process.env.NEXT_PUBLIC_STRIPE_AGENCY_PRICE_ID || '',
+    priceAmount: 39,
+    priceTRY: 1200,
+  },
+]

@@ -1,0 +1,462 @@
+{
+  "Landing": {
+    "Portfolio": {
+      "title": "Kendi profesyonel portföy sayfanı dakikalar içinde oluştur.",
+      "description": "Crewset ile müşterilerini ve sözleşmelerini yönetirken, aynı zamanda herkese açık kişisel portföy sayfanı oluştur.",
+      "feature1": "Kendi kullanıcı adına özel URL ( /username )",
+      "feature2": "Hizmetlerini ve kendini tanıtan herkese açık profil",
+      "feature3": "Müşterilere tek link gönderme",
+      "cta": "Portföyünü Oluştur",
+      "subNote": "Ücretsiz • Kurulum gerekmez"
+    },
+    "HowItWorks": {
+      "title": "Crewset ile sözleşme takibi 3 adımda",
+      "subtitle": "Kurulum yok. Eğitim yok. 5 dakikada kullanmaya başla.",
+      "step1Title": "Müşterini ekle",
+      "step1Desc": "Müşteri bilgilerini gir, tüm ilişkileri tek panelde topla.",
+      "step2Title": "Sözleşmeni tanımla",
+      "step2Desc": "Başlangıç, bitiş tarihi ve sözleşme değerini gir.",
+      "step3Title": "Crewset seni otomatik uyarır",
+      "step3Desc": "Bitiş tarihleri yaklaşınca dashboard ve e-posta ile haber al.",
+      "note": "Uyarılar hem görsel hem mail olarak çalışır."
+    },
+    "Trust": {
+      "title": "Freelancer’lar ve ajanslar için geliştirildi",
+      "card1": "KVKK uyumlu veri silme (hesap + tüm veriler)",
+      "card2": "Gerçek sözleşme hatırlatmaları (mail + panel)",
+      "card3": "Stripe & Iyzico ile güvenli ödeme",
+      "card4": "Kurulum gerektirmez, tarayıcıdan çalışır"
+    }
+  },
+  "Navbar": {
+    "features": "Özellikler",
+    "pricing": "Fiyatlandırma",
+    "faq": "S.S.S.",
+    "login": "Giriş Yap",
+    "getStarted": "Hemen Başla"
+  },
+  "Hero": {
+    "badge": "Düzenli gelirinizi koruyun",
+    "title": "Bir Daha Asla <span class='text-primary'>Sözleşme Yenilemeyi</span> Kaçırmayın",
+    "description": "Freelancerlar ve ajanslar için sözleşmeleri takip etme, hatırlatıcıları otomatikleştirme ve risk altındaki geliri görselleştirme platformu.",
+    "startForFree": "Ücretsiz Başla",
+    "learnMore": "Daha Fazla Bilgi"
+  },
+  "Features": {
+    "title": "Büyümek için ihtiyacınız olan her şey",
+    "description": "Crewset, müşteri ilişkilerinizi yönetmeniz ve gelecekteki gelirinizi güvence altına almanız için size araçlar sunar.",
+    "items": {
+      "smartReminders": {
+        "title": "Akıllı Hatırlatıcılar",
+        "description": "Sözleşmeler sona ermeden önce otomatik bildirimler alın, böylece yenilemeleri zamanında görüşebilirsiniz."
+      },
+      "revenueProtection": {
+        "title": "Gelir Koruması",
+        "description": "Her ay ne kadar gelirin risk altında olduğunu görselleştirin ve yenileme çabalarınızı önceliklendirin."
+      },
+      "clientManagement": {
+        "title": "Müşteri Yönetimi",
+        "description": "Tüm müşteri detaylarınızı, notlarınızı ve sözleşme geçmişinizi tek bir düzenli yerde tutun."
+      },
+      "contractTracking": {
+        "title": "Sözleşme Takibi",
+        "description": "Her iş için başlangıç tarihlerini, bitiş tarihlerini, değerleri ve yenileme olasılıklarını takip edin."
+      },
+      "performanceReports": {
+        "title": "Performans Raporları",
+        "description": "Ajansınızın performansını artırmak için yenileme oranlarınızı ve kaybedilen geliri analiz edin."
+      },
+      "timeSaving": {
+        "title": "Zaman Tasarrufu",
+        "description": "E-tabloları kullanmayı bırakın. Sözleşme yönetimi iş akışınızı bugün otomatikleştirin."
+      }
+    }
+  },
+  "Pricing": {
+    "title": "Basit, şeffaf fiyatlandırma",
+    "description": "Ücretsiz başlayın ve ajansınız büyüdükçe yükseltin. Ücretsiz plan için kredi kartı gerekmez.",
+    "mostPopular": "En Popüler",
+    "perMonth": "/ay",
+    "getStarted": "Başla",
+    "plans": {
+      "free": {
+        "name": "Ücretsiz",
+        "description": "Başlamak için mükemmel",
+        "features": {
+          "0": "3 müşteriye kadar",
+          "1": "5 sözleşmeye kadar",
+          "2": "Temel hatırlatıcılar"
+        }
+      },
+      "pro": {
+        "name": "Pro",
+        "description": "Büyüyen freelancerlar için",
+        "features": {
+          "0": "Sınırsız müşteri",
+          "1": "Sınırsız sözleşme",
+          "2": "Risk altındaki gelir panosu",
+          "3": "Yenileme olasılığı",
+          "4": "Raporlar"
+        }
+      },
+      "agency": {
+        "name": "Ajans",
+        "description": "Küçük ekipler için",
+        "features": {
+          "0": "Ekip erişimi (3 kullanıcıya kadar)",
+          "1": "Gelişmiş hatırlatıcılar",
+          "2": "Öncelikli destek"
+        }
+      }
+    }
+  },
+  "FAQ": {
+    "title": "Sıkça Sorulan Sorular",
+    "description": "Aklınızdaki soruları giderin, işinizi şansa bırakmayın.",
+    "items": {
+      "item1": {
+        "question": "Excel veya Takvimden ne farkı var?",
+        "answer": "Excel size 'Sözleşmen bitiyor, hemen ara!' diye mail atmaz. Crewset, bitiş tarihlerini otomatik takip eder ve size zamanında haber verir. Böylece yenileme fırsatlarını kaçırmaz, düzenli gelirinizi korursunuz."
+      },
+      "item2": {
+        "question": "Bu platform bana nasıl para kazandırır?",
+        "answer": "Unutulan her sözleşme, kaybedilen bir gelirdir. Crewset, müşterilerinizle tam zamanında iletişime geçmenizi sağlayarak mevcut işlerinizi korumanıza yardımcı olur. Sadece bir sözleşmeyi bile kurtarması, yıllık maliyetini fazlasıyla çıkarır."
+      },
+      "item3": {
+        "question": "Kullanımı zor mu? Teknik bilgi gerekir mi?",
+        "answer": "Hayır, hiç gerekmez. Karmaşık CRM'lerin aksine, sadece ihtiyacınız olanı sunuyoruz. Müşterinizi ekleyin, sözleşme tarihini girin ve gerisini bize bırakın. 5 dakika içinde tüm işlerinizi panele taşıyabilirsiniz."
+      },
+      "item4": {
+        "question": "Verilerim ve ödemelerim güvende mi?",
+        "answer": "Kesinlikle. Ödemeleriniz dünya standardı güvenli altyapılarla korunur. Müşteri ve sözleşme verileriniz ise şifreli sunucularda saklanır ve sadece sizin erişiminize açıktır."
+      },
+      "item5": {
+        "question": "Memnun kalmazsam iptal edebilir miyim?",
+        "answer": "Elbette. Hiçbir taahhüt veya gizli ücret yok. İstediğiniz an panelden tek tıkla iptal edebilirsiniz. İşinize değer kattığımız sürece yanınızdayız."
+      }
+    }
+  },
+  "Footer": {
+    "product": "Ürün",
+    "legal": "Yasal",
+    "connect": "Bağlantı",
+    "tagline": "Dünya çapındaki freelancerlar ve ajanslar için geliri koruyoruz.",
+    "rights": "Tüm hakları saklıdır.",
+    "links": {
+      "features": "Özellikler",
+      "pricing": "Fiyatlandırma",
+      "roadmap": "Yol Haritası",
+      "privacy": "Gizlilik Politikası",
+      "terms": "Hizmet Şartları",
+      "refund": "İptal ve İade",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn",
+      "contact": "İletişim"
+    }
+  },
+  "Legal": {
+    "Privacy": {
+      "title": "Gizlilik Politikası"
+    },
+    "Terms": {
+      "title": "Hizmet Şartları"
+    },
+    "Refund": {
+      "title": "İptal ve İade Politikası"
+    }
+  },
+  "Support": {
+    "title": "Size nasıl yardımcı olabiliriz?",
+    "description": "Sorularınızı yanıtlamak ve sorunlarınızı çözmek için buradayız.",
+    "email": {
+      "title": "Bize Yazın",
+      "description": "Genellikle 24 saat içinde dönüş yapıyoruz."
+    },
+    "faq": {
+      "title": "S.S.S.'e Göz Atın",
+      "description": "Sık sorulan sorulara hızlı yanıtlar bulun.",
+      "button": "S.S.S.'e Git"
+    },
+    "form": {
+      "title": "Destek İle İletişime Geçin",
+      "description": "Aşağıdaki formu doldurun, en kısa sürede size dönüş yapalım.",
+      "name": "İsim",
+      "namePlaceholder": "Adınız Soyadınız",
+      "email": "E-posta",
+      "emailPlaceholder": "ornek@email.com",
+      "subject": "Konu",
+      "subjectPlaceholder": "Hakkında...",
+      "message": "Mesaj",
+      "messagePlaceholder": "Sorununuzu detaylıca anlatın...",
+      "submit": "Mesaj Gönder",
+      "sending": "Gönderiliyor...",
+      "successTitle": "Mesaj Gönderildi",
+      "success": "Mesajınız bize ulaştı, en kısa sürede dönüş yapacağız.",
+      "errorTitle": "Hata",
+      "errors": {
+        "validation": "Lütfen bilgilerinizi kontrol edin.",
+        "send": "Mesaj gönderilemedi. Lütfen daha sonra tekrar deneyin."
+      }
+    }
+  },
+  "Auth": {
+    "login": {
+      "title": "Giriş Yap",
+      "description": "Hesabınıza giriş yapmak için e-postanızı girin",
+      "emailLabel": "E-posta",
+      "passwordLabel": "Şifre",
+      "submit": "Giriş Yap",
+      "submitting": "Giriş yapılıyor...",
+      "orContinueWith": "Veya şununla devam et",
+      "noAccount": "Hesabınız yok mu?",
+      "signUp": "Kaydol",
+      "forgotPassword": "Şifrenizi mi unuttunuz?",
+      "backToLogin": "Girişe dön",
+      "sendResetLink": "Sıfırlama Bağlantısı Gönder",
+      "updatePassword": "Şifreyi Güncelle",
+      "newPassword": "Yeni Şifre",
+      "confirmPassword": "Şifreyi Onayla",
+      "passwordsDoNotMatch": "Şifreler eşleşmiyor",
+      "magicLink": "Sihirli Bağlantı ile Giriş Yap",
+      "google": "Google ile Giriş Yap",
+      "sendMagicLink": "Sihirli Bağlantı Gönder",
+      "magicLinkSent": "Sihirli bağlantı için e-postanızı kontrol edin."
+    },
+    "register": {
+      "title": "Hesap Oluştur",
+      "description": "Hesabınızı oluşturmak için aşağıya e-postanızı girin",
+      "submit": "Kaydol",
+      "submitting": "Hesap oluşturuluyor...",
+      "orContinueWith": "Veya şununla devam et",
+      "google": "Google ile Kaydol",
+      "login": "Giriş Yap",
+      "alreadyHaveAccount": "Zaten hesabınız var mı?"
+    },
+    "errors": {
+      "emailRequired": "Lütfen geçerli bir e-posta adresi girin.",
+      "passwordRequired": "Şifre gereklidir.",
+      "passwordLength": "Şifre en az 8 karakter olmalıdır."
+    }
+  },
+  "Sidebar": {
+    "dashboard": "Panel",
+    "clients": "Müşteriler",
+    "contracts": "Sözleşmeler",
+    "reports": "Raporlar",
+    "billing": "Faturalandırma",
+    "settings": "Ayarlar",
+    "team": "Takım",
+    "profile": "Profil",
+    "support": "Destek"
+  },
+  "Team": {
+    "title": "Takım Yönetimi",
+    "description": "Organizasyonunuzu ve takım üyelerinizi yönetin.",
+    "createOrg": "Organizasyon Oluştur",
+    "createOrgDescription": "Takımınızla işbirliği yapmak için yeni bir organizasyon oluşturun.",
+    "orgName": "Organizasyon Adı",
+    "create": "Oluştur",
+    "members": "Üyeler",
+    "inviteMember": "Üye Ekle",
+    "inviteDescription": "E-posta adresi ile organizasyonunuza yeni bir üye ekleyin.",
+    "email": "E-posta Adresi",
+    "role": "Rol",
+    "add": "Ekle",
+    "leaveOrg": "Organizasyondan Ayrıl",
+    "owner": "Sahip",
+    "member": "Üye",
+    "noOrg": "Herhangi bir organizasyonun parçası değilsiniz.",
+    "currentOrg": "Mevcut Organizasyon",
+    "settings": "Ayarlar",
+    "errorTitle": "Hata"
+  },
+  "Dashboard": {
+    "title": "Panel",
+    "totalAnnualRevenue": "Toplam Yıllık Gelir",
+    "activeContracts": "Aktif Sözleşmeler",
+    "revenueAtRisk": "Risk Altındaki Gelir",
+    "subscriptionPlan": "Abonelik Planı",
+    "renewalProbability": "Ort. Yenileme Olasılığı",
+    "acrossActiveContracts": "{count} aktif sözleşme üzerinden",
+    "totalActiveContracts": "Toplam aktif sözleşme",
+    "contractsExpiringSoon": "{count} sözleşme 30 gün içinde sona eriyor",
+    "currentPlan": "Mevcut plan: {plan}",
+    "recentActivity": "Son Hareketler",
+    "viewAll": "Tümünü Gör",
+    "upgradeToPro": "Bunu görmek için Pro'ya yükseltin",
+    "upgrade": "Yükselt",
+    "paymentFailed": "Ödemeniz alınamadı. Lütfen ödeme bilgilerinizi güncelleyin.",
+    "updateBilling": "Bilgileri Güncelle"
+  },
+  "UserNav": {
+    "profile": "Profil",
+    "billing": "Faturalandırma",
+    "settings": "Ayarlar",
+    "viewSite": "Siteyi Görüntüle",
+    "logout": "Çıkış Yap"
+  },
+  "Clients": {
+    "title": "Müşteriler",
+    "addClient": "Müşteri Ekle",
+    "editClient": "Müşteriyi Düzenle",
+    "addDescription": "Sözleşmelerini yönetmek için yeni bir müşteri ekleyin.",
+    "editDescription": "Müşteri profilinde değişiklik yapın.",
+    "form": {
+      "name": "İsim",
+      "email": "E-posta",
+      "company": "Şirket",
+      "notes": "Notlar",
+      "save": "Değişiklikleri kaydet"
+    }
+  },
+  "Contracts": {
+    "title": "Sözleşmeler",
+    "addContract": "Sözleşme Ekle",
+    "editContract": "Sözleşmeyi Düzenle",
+    "addDescription": "Yenilemeyi takip etmek için yeni bir sözleşme oluşturun.",
+    "editDescription": "Sözleşme detaylarını güncelleyin.",
+    "form": {
+      "name": "Sözleşme Adı",
+      "client": "Müşteri",
+      "selectClient": "Bir müşteri seçin",
+      "startDate": "Başlangıç Tarihi",
+      "endDate": "Bitiş Tarihi",
+      "renewalType": "Yenileme Türü",
+      "valueAmount": "Değer Tutarı",
+      "valuePeriod": "Değer Dönemi",
+      "renewalProbability": "Yenileme Olasılığı",
+      "notes": "Notlar",
+      "save": "Değişiklikleri kaydet"
+    },
+    "columns": {
+      "name": "İsim",
+      "client": "Müşteri",
+      "endDate": "Bitiş Tarihi",
+      "value": "Değer",
+      "status": "Durum"
+    },
+    "monthly": "ay",
+    "yearly": "yıl",
+    "status": {
+      "active": "AKTİF",
+      "expired": "SÜRESİ DOLDU",
+      "renewed": "YENİLENDİ",
+      "lost": "KAYBEDİLDİ"
+    }
+  },
+  "Billing": {
+    "title": "Faturalandırma",
+    "description": "Abonelik ve faturalandırma detaylarınızı yönetin.",
+    "manageSubscription": "Aboneliği Yönet",
+    "currentPlan": "Mevcut Plan",
+    "upgrade": "Yükselt",
+    "renew": "Aboneliği Yenile",
+    "downgradeInPortal": "Portalda Düşür",
+    "perMonth": "/ay",
+    "successTitle": "Abonelik güncellendi",
+    "successDescription": "Aboneliğiniz başarıyla güncellendi.",
+    "canceledTitle": "İptal Edildi",
+    "canceledDescription": "Abonelik güncelleme işleminiz iptal edildi.",
+    "errorTitle": "Hata",
+    "errorDescription": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+    "billingInfo": "Fatura Bilgileri",
+    "billingInfoDescription": "Faturalarınız için gerekli yasal bilgileri girin.",
+    "billingInfoTitle": "Fatura Bilgileri",
+    "billingInfoDesc": "Faturalarınız için gerekli yasal bilgileri girin.",
+    "companyName": "Ünvan / Şirket Adı",
+    "taxId": "Vergi No / T.C. Kimlik No",
+    "taxOffice": "Vergi Dairesi",
+    "address": "Adres",
+    "save": "Kaydet",
+    "saveBillingInfo": "Fatura Bilgilerini Kaydet",
+    "billingInfoUpdated": "Fatura bilgileri güncellendi",
+    "unauthorized": "Yetkisiz işlem",
+    "invalidData": "Geçersiz veri"
+  },
+  "Reports": {
+    "title": "Raporlar",
+    "description": "Gelir ve sözleşme performansınızı görüntüleyin.",
+    "comingSoon": "Çok Yakında",
+    "comingSoonDesc": "Size gelişmiş raporlama özellikleri sunmak için çok çalışıyoruz.",
+    "totalRevenue": "Toplam Gelir",
+    "revenueByMonth": "Aylık Gelir Bitiş Dağılımı",
+    "contractStatus": "Sözleşme Durum Dağılımı",
+    "active": "Aktif",
+    "expired": "Sona Ermiş",
+    "renewed": "Yenilenmiş",
+    "lost": "Kaybedilmiş",
+    "month": "Ay",
+    "amount": "Tutar",
+    "value": "Değer",
+    "count": "Sayı"
+  },
+  "Settings": {
+    "title": "Ayarlar",
+    "description": "Hesap ayarlarınızı ve tercihlerinizi yönetin.",
+    "dangerZone": "Tehlikeli Bölge",
+    "dangerZoneDesc": "Hesabınız için geri alınamaz işlemler.",
+    "deleteAccount": "Hesabı Sil",
+    "deleteAccountDesc": "Hesabınızı ve tüm içeriğinizi kalıcı olarak silin.",
+    "deleteAccountConfirmTitle": "Kesinlikle emin misiniz?",
+    "deleteAccountConfirmDesc": "Bu işlem geri alınamaz. Hesabınız ve tüm verileriniz sunucularımızdan kalıcı olarak silinecektir.",
+    "cancel": "İptal",
+    "accountDeleted": "Hesabınız başarıyla silindi.",
+    "error": "Hata",
+    "success": "Başarılı",
+    "unauthorized": "Yetkisiz işlem",
+    "general": "Genel",
+    "appearance": "Görünüm",
+    "language": "Dil",
+    "theme": "Tema",
+    "light": "Açık",
+    "dark": "Koyu",
+    "system": "Sistem"
+  },
+  "Profile": {
+    "title": "Profil ve Portföy",
+    "tabs": {
+      "general": "Genel Bilgiler",
+      "portfolio": "Portföy"
+    },
+    "visibility": {
+      "title": "Herkese Açık Görünürlük",
+      "description": "Profilinizi dünyaya açın.",
+      "upgradeToPro": "Profilinizi yayınlamak için Pro planına yükseltin.",
+      "setUsername": "Linkinizi almak için aşağıdan bir kullanıcı adı belirleyin",
+      "linkCopied": "Link kopyalandı!",
+      "published": "Yayınlandı",
+      "unpublished": "Yayından Kaldırıldı",
+      "publishedDesc": "Profiliniz artık yayında.",
+      "unpublishedDesc": "Profiliniz gizlendi."
+    },
+    "form": {
+      "fullName": "Ad Soyad",
+      "username": "Kullanıcı Adı (URL)",
+      "title": "Unvan",
+      "bio": "Biyografi",
+      "socialLinks": "Sosyal Medya Linkleri",
+      "save": "Değişiklikleri Kaydet",
+      "saving": "Kaydediliyor..."
+    },
+    "portfolio": {
+      "addProject": "Proje Ekle",
+      "editProject": "Düzenle",
+      "deleteProject": "Sil",
+      "title": "Proje Başlığı",
+      "description": "Açıklama",
+      "imageUrl": "Görsel URL",
+      "link": "Proje Linki",
+      "add": "Ekle",
+      "cancel": "İptal",
+      "confirmDelete": "Bu projeyi silmek istediğinize emin misiniz?",
+      "empty": "Henüz proje eklenmemiş."
+    },
+    "errors": {
+      "usernameRequired": "Profilinizi yayınlamak için bir kullanıcı adı belirlemelisiniz.",
+      "customUsernamePro": "Özel kullanıcı adları sadece Pro planda mevcuttur.",
+      "updateSuccess": "Profil başarıyla güncellendi.",
+      "projectAdded": "Proje portföye eklendi.",
+      "projectDeleted": "Proje silindi."
+    }
+  }
+}
