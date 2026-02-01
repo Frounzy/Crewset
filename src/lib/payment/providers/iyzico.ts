@@ -88,6 +88,9 @@ export class IyzicoProvider implements PaymentProvider {
   }
 
   async verifyPayment(token: string): Promise<{ success: boolean; paymentId?: string; raw?: any }> {
+    if (!this.iyzipay) {
+      throw new Error('Iyzico provider is not initialized (missing API keys)')
+    }
     return new Promise((resolve, reject) => {
       this.iyzipay.checkoutForm.retrieve({
         locale: Iyzipay.LOCALE.TR,
