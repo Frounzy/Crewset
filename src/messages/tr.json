@@ -28,6 +28,23 @@
       "card4": "Kurulum gerektirmez, tarayıcıdan çalışır"
     }
   },
+  "MobileApp": {
+    "badge": "Mobil Uygulama",
+    "title": "Crewset her an yanınızda",
+    "description": "Sözleşmelerinizi ofise bağlı kalmadan yönetin. Crewset mobil uygulaması çok yakında iOS ve Android cihazlarda. Bildirimler ile hiçbir yenilemeyi kaçırmayın.",
+    "phone": {
+      "greeting": "Merhaba, Erol 👋",
+      "contractsApproaching": "3 sözleşme yaklaşıyor",
+      "upcoming": "YAKLAŞANLAR",
+      "contract1": "Acme Corp Tasarım",
+      "contract1Date": "Bitiş: 11 Şubat",
+      "contract2": "TechStart Geliştirme",
+      "contract2Date": "Bitiş: 12 Şubat",
+      "contract3": "Global Media SEO",
+      "contract3Date": "Bitiş: 13 Şubat",
+      "revenueAnalytics": "Gelir Analizi"
+    }
+  },
   "Navbar": {
     "features": "Özellikler",
     "pricing": "Fiyatlandırma",

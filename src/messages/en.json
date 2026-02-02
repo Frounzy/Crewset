@@ -28,6 +28,23 @@
       "card4": "No setup required, works in browser"
     }
   },
+  "MobileApp": {
+    "badge": "Mobile App",
+    "title": "Crewset is always with you",
+    "description": "Manage your contracts without being tied to the office. Crewset mobile app is coming soon to iOS and Android. Never miss a renewal with push notifications.",
+    "phone": {
+      "greeting": "Hello, Erol 👋",
+      "contractsApproaching": "3 contracts approaching",
+      "upcoming": "UPCOMING",
+      "contract1": "Acme Corp Design",
+      "contract1Date": "Ends: Feb 11",
+      "contract2": "TechStart Dev",
+      "contract2Date": "Ends: Feb 12",
+      "contract3": "Global Media SEO",
+      "contract3Date": "Ends: Feb 13",
+      "revenueAnalytics": "Revenue Analytics"
+    }
+  },
   "Navbar": {
     "features": "Features",
     "pricing": "Pricing",

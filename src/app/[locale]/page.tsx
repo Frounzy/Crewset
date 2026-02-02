@@ -7,6 +7,7 @@ import { Footer } from '@/components/landing/footer'
 import { PortfolioSection } from '@/components/landing/portfolio-section'
 import { HowItWorksSection } from '@/components/landing/how-it-works-section'
 import { TrustSection } from '@/components/landing/trust-section'
+import { MobileAppSection } from '@/components/landing/mobile-app-section'
 import { createClient } from '@/lib/supabase/server'
 
 export default async function Home() {
@@ -37,6 +38,7 @@ export default async function Home() {
         <HowItWorksSection />
         <Features />
         <TrustSection />
+        <MobileAppSection />
         <Pricing />
         <FAQ />
       </main>
