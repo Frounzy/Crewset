@@ -7,12 +7,12 @@ let providerInstance: PaymentProvider | null = null
 
 export function getPaymentProvider(): PaymentProvider {
   if (!providerInstance) {
-    const providerName = process.env.PAYMENT_PROVIDER || 'iyzico'
+    const providerName = process.env.PAYMENT_PROVIDER || 'stripe'
     
-    if (providerName === 'stripe') {
-        providerInstance = new StripeProvider()
+    if (providerName === 'iyzico') {
+      providerInstance = new IyzicoProvider()
     } else {
-        providerInstance = new IyzicoProvider()
+      providerInstance = new StripeProvider()
     }
   }
   return providerInstance
