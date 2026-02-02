@@ -10,7 +10,10 @@ export async function MobileAppSection() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-24">
           <div className="flex-1 space-y-6 text-center md:text-left z-10">
             <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-primary text-primary-foreground hover:bg-primary/80">
-              <Smartphone className="w-3 h-3 mr-1" />
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-3 h-3 mr-1">
+                <rect x="7" y="2" width="10" height="20" rx="2" ry="2"></rect>
+                <path d="M11 18h2"></path>
+              </svg>
               {t('badge')}
             </div>
             <h2 className="text-3xl md:text-5xl font-bold tracking-tight">
@@ -49,7 +52,10 @@ export async function MobileAppSection() {
                     {/* Screen Content */}
                     <div className="h-40 bg-primary p-6 pt-12 flex flex-col justify-end text-primary-foreground relative overflow-hidden">
                         <div className="absolute top-0 right-0 p-8 opacity-10">
-                           <Smartphone className="w-32 h-32" />
+                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-32 h-32">
+                              <rect x="7" y="2" width="10" height="20" rx="2" ry="2"></rect>
+                              <path d="M11 18h2"></path>
+                           </svg>
                         </div>
                         <div className="w-12 h-12 rounded-full bg-white/20 mb-3 flex items-center justify-center backdrop-blur-sm">
                             <span className="font-bold text-lg">C</span>
@@ -108,7 +114,12 @@ export async function MobileAppSection() {
                     
                     {/* Tab Bar */}
                     <div className="h-16 border-t bg-white dark:bg-zinc-950 flex items-center justify-around px-2">
-                         <div className="p-2 text-primary"><Smartphone className="w-6 h-6" /></div>
+                         <div className="p-2 text-primary">
+                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6">
+                             <rect x="7" y="2" width="10" height="20" rx="2" ry="2"></rect>
+                             <path d="M11 18h2"></path>
+                           </svg>
+                         </div>
                          <div className="p-2 text-muted-foreground/50"><div className="w-6 h-6 rounded-full border-2 border-current"></div></div>
                          <div className="p-2 text-muted-foreground/50"><div className="w-6 h-6 rounded border-2 border-current"></div></div>
                     </div>

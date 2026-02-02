@@ -30,7 +30,10 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     },
     description,
     icons: {
-      icon: "/favicon.jpg"
+      icon: [
+        { url: "/favicon.svg", type: "image/jpeg" },
+        { url: "/favicon.svg", type: "image/jpeg" }
+      ]
     },
     alternates: {
       canonical: canonicalPath,
@@ -47,17 +50,15 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       siteName: "Crewset",
       locale,
       images: [
-        {
-          url: "/favicon.jpg",
-          alt: "Crewset",
-        }
+        { url: "/faviconç.jpg", alt: "Crewset" },
+        { url: "/favicon.jpg", alt: "Crewset (fallback)" }
       ]
     },
     twitter: {
       card: "summary",
       title,
       description,
-      images: ["/favicon.jpg"]
+      images: ["/faviconç.jpg", "/favicon.jpg"]
     },
     robots: {
       index: true,
