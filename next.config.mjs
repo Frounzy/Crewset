@@ -23,7 +23,6 @@ const nextConfig = {
       }
     ],
   },
-  serverExternalPackages: ['iyzipay'],
 };
 
 export default withNextIntl(nextConfig);
