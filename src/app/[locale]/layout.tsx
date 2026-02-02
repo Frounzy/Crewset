@@ -16,10 +16,53 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Crewset - Protect your recurring revenue",
-  description: "Freelancer & Agency Contract Renewal and Revenue Protection platform.",
-};
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://crewset.app'
+  const locale = params?.locale || 'en'
+  const title = "Crewset - Protect your recurring revenue"
+  const description = "Freelancer & Agency Contract Renewal and Revenue Protection platform."
+  const canonicalPath = `/${locale}`
+  return {
+    metadataBase: new URL(baseUrl),
+    title: {
+      default: title,
+      template: "%s | Crewset"
+    },
+    description,
+    icons: {
+      icon: "/favicon.svg"
+    },
+    alternates: {
+      canonical: canonicalPath,
+      languages: {
+        en: "/en",
+        tr: "/tr",
+      }
+    },
+    openGraph: {
+      type: "website",
+      url: canonicalPath,
+      title,
+      description,
+      siteName: "Crewset",
+      locale
+    },
+    twitter: {
+      card: "summary",
+      title,
+      description
+    },
+    robots: {
+      index: true,
+      follow: true
+    },
+    viewport: {
+      width: "device-width",
+      initialScale: 1,
+      themeColor: "#ffffff"
+    }
+  }
+}
 
 export default async function RootLayout({
   children,
