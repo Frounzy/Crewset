@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
     },
     description,
     icons: {
-      icon: "/favicon.svg"
+      icon: "/favicon.jpg"
     },
     alternates: {
       canonical: canonicalPath,
@@ -45,12 +45,19 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       title,
       description,
       siteName: "Crewset",
-      locale
+      locale,
+      images: [
+        {
+          url: "/favicon.jpg",
+          alt: "Crewset",
+        }
+      ]
     },
     twitter: {
       card: "summary",
       title,
-      description
+      description,
+      images: ["/favicon.jpg"]
     },
     robots: {
       index: true,
