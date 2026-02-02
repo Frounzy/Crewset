@@ -24,29 +24,6 @@ export async function POST(req: Request) {
       return new NextResponse('No subscription found', { status: 404 })
     }
 
-    // Check if it's an Iyzico subscription (manual period)
-    if (subscription.stripe_customer_id.startsWith('iyz_')) {
-        const expiryDate = subscription.current_period_end 
-            ? new Date(subscription.current_period_end)
-            : null
-            
-        const daysLeft = expiryDate 
-            ? Math.ceil((expiryDate.getTime() - Date.now()) / (1000 * 60 * 60 * 24))
-            : 0
-
-        if (expiryDate && daysLeft <= 3) {
-            return NextResponse.json({ 
-                message: `Your subscription expires in ${daysLeft} days. Please go back and select a plan to renew.` 
-            })
-        }
-
-        const expiryString = expiryDate ? expiryDate.toLocaleDateString('tr-TR') : 'Unknown'
-
-        return NextResponse.json({ 
-            message: `Your ${subscription.plan} plan is active until ${expiryString}. No action is needed.` 
-        })
-    }
-
     // Otherwise, assume Stripe and create Portal Session
     try {
         const session = await stripe.billingPortal.sessions.create({

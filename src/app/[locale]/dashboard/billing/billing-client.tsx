@@ -114,13 +114,6 @@ export function BillingClient({ subscription, profile }: BillingClientProps) {
         throw new Error(data.error || 'Checkout failed')
       }
 
-      if (data.provider === 'iyzico' && data.checkoutContent) {
-        document.open()
-        document.write(data.checkoutContent)
-        document.close()
-        return
-      }
-
       if (data.url) {
         window.location.href = data.url
       }

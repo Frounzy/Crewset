@@ -67,9 +67,6 @@ export async function POST(req: Request) {
     if (result.provider === 'stripe' && result.url) {
         logger.info('Stripe Checkout session created', user.id, { priceId })
         return NextResponse.json({ url: result.url, provider: 'stripe' })
-    } else if (result.provider === 'iyzico' && result.checkoutContent) {
-        logger.info('Iyzico Checkout session created', user.id, { priceId })
-        return NextResponse.json({ checkoutContent: result.checkoutContent, provider: 'iyzico' })
     }
 
     return new NextResponse('Error creating session', { status: 500 })

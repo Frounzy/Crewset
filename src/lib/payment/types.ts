@@ -28,10 +28,8 @@ export interface CheckoutSessionParams {
 }
 
 export interface CheckoutSessionResult {
-  checkoutContent?: string // HTML content for Iyzico
-  url?: string // Redirect URL for Stripe
-  token?: string
-  provider: 'iyzico' | 'stripe'
+  url?: string
+  provider: 'stripe'
 }
 
 export interface PaymentProvider {
