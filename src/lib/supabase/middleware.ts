@@ -36,6 +36,8 @@ export async function updateSession(request: NextRequest, response: NextResponse
   const pathWithoutLocale = pathname.replace(localePattern, '') || '/'
 
   // Protected routes logic
+  // Public profile: /{username} should be publicly accessible
+  const isPublicProfile = /^\/[a-zA-Z0-9_-]+$/.test(pathWithoutLocale)
   if (
     !user &&
     !pathWithoutLocale.startsWith('/login') &&
@@ -45,7 +47,8 @@ export async function updateSession(request: NextRequest, response: NextResponse
     !pathWithoutLocale.startsWith('/update-password') &&
     !pathWithoutLocale.startsWith('/sign') &&
     !pathWithoutLocale.startsWith('/api') && // Exclude API routes from auth redirect if they are public (some might be)
-    pathWithoutLocale !== '/'
+    pathWithoutLocale !== '/' &&
+    !isPublicProfile
   ) {
     // Determine locale to redirect to
     const localeMatch = pathname.match(localePattern)

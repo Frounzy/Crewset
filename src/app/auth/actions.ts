@@ -40,8 +40,6 @@ export async function signup(formData: FormData) {
     return { error: error.message }
   }
 
-  // If email confirmation is disabled, user is logged in immediately.
-  // We can try to get the session to see if we should redirect.
   const { data: { session } } = await supabase.auth.getSession()
   
   if (session) {
