@@ -26,6 +26,16 @@
       "card2": "Real contract reminders (mail + panel)",
       "card3": "Secure payment with Stripe",
       "card4": "No setup required, works in browser"
+    },
+    "ApprovalLink": {
+      "title": "Client-Specific Approval Link",
+      "description": "Get contract approvals quickly, clearly, and with control.",
+      "items": {
+        "link": { "title": "Link", "desc": "A unique link for each client" },
+        "approve": { "title": "Approval", "desc": "Clear one-step approval" },
+        "record": { "title": "Record", "desc": "Approval time and steps are stored" }
+      },
+      "footnote": "Approval records are kept organized to prevent confusion later."
     }
   },
   "MobileApp": {

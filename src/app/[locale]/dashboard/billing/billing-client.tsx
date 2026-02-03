@@ -1,7 +1,7 @@
 'use client'
 
 import { useSearchParams, useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Check, Loader2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import {
@@ -34,6 +34,7 @@ export function BillingClient({ subscription, profile }: BillingClientProps) {
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
+  const handledRef = useRef(false)
 
   const currentPlan = subscription?.plan || 'free'
   
@@ -54,12 +55,41 @@ export function BillingClient({ subscription, profile }: BillingClientProps) {
   }
 
   useEffect(() => {
-    if (searchParams.get('success')) {
-      toast({
-        title: t('successTitle'),
-        description: t('successDescription'),
+    const success = searchParams.get('success')
+    const sessionId = searchParams.get('session_id')
+    if (success === 'true' && sessionId && !handledRef.current) {
+      handledRef.current = true
+      const tryVerify = async () => {
+        let attempts = 0
+        const maxAttempts = 10
+        const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
+
+        while (attempts < maxAttempts) {
+          attempts++
+          try {
+            const res = await fetch(`/api/payment/verify?session_id=${encodeURIComponent(sessionId)}`)
+            const data = await res.json()
+            if (data?.success) {
+              toast({
+                title: t('successTitle'),
+                description: t('successDescription'),
+              })
+              break
+            }
+          } catch (e) {
+            // noop
+          }
+          await delay(1500)
+        }
+      }
+
+      tryVerify().finally(() => {
+        const url = new URL(window.location.href)
+        url.searchParams.delete('success')
+        url.searchParams.delete('session_id')
+        router.replace(url.toString())
+        router.refresh()
       })
-      router.refresh()
     }
 
     if (searchParams.get('canceled')) {
@@ -177,7 +207,7 @@ export function BillingClient({ subscription, profile }: BillingClientProps) {
                         <Button 
                             className="w-full" 
                             onClick={() => onCheckout(plan.priceId)}
-                            disabled={isLoading}
+                            disabled={isLoading || !plan.priceId}
                         >
                             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             {t('renew')} ({daysLeft} days left)
@@ -190,7 +220,7 @@ export function BillingClient({ subscription, profile }: BillingClientProps) {
                 ) : (
                     <Button 
                         className="w-full" 
-                        disabled={plan.slug === 'free' || isLoading}
+                        disabled={plan.slug === 'free' || isLoading || !plan.priceId}
                         onClick={() => onCheckout(plan.priceId)}
                     >
                         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

@@ -26,6 +26,16 @@
       "card2": "Gerçek sözleşme hatırlatmaları (mail + panel)",
       "card3": "Stripe ile güvenli ödeme",
       "card4": "Kurulum gerektirmez, tarayıcıdan çalışır"
+    },
+    "ApprovalLink": {
+      "title": "Müşteriye Özel Onay Linki",
+      "description": "Sözleşme onayını hızlı, anlaşılır ve kontrollü şekilde alın.",
+      "items": {
+        "link": { "title": "Link", "desc": "Her müşteri için kişiye özel bağlantı" },
+        "approve": { "title": "Onay", "desc": "Tek adımda net ve anlaşılır onay" },
+        "record": { "title": "Kayıt", "desc": "Onay zamanı ve adımları saklanır" }
+      },
+      "footnote": "Onay kayıtları düzenli tutulur; sonradan karışıklıkların önüne geçmeye yardımcı olur."
     }
   },
   "MobileApp": {

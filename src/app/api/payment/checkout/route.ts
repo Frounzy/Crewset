@@ -4,6 +4,7 @@ import { logger } from '@/lib/security/logger'
 import { checkRateLimit } from '@/lib/security/rate-limit'
 import { getPaymentProvider } from '@/lib/payment/service'
 import { PLANS } from '@/config/subscriptions'
+import { cookies } from 'next/headers'
 
 export async function POST(req: Request) {
   const supabase = await createClient()
@@ -11,25 +12,25 @@ export async function POST(req: Request) {
 
   if (!user) {
     logger.warn('Unauthorized checkout attempt')
-    return new NextResponse('Unauthorized', { status: 401 })
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   }
 
   // Rate Limiting: 5 checkout attempts per minute per user
   const { success } = await checkRateLimit(`checkout:${user.id}`, 5, 60)
   if (!success) {
-      return new NextResponse('Too many checkout attempts. Please try again later.', { status: 429 })
+      return NextResponse.json({ error: 'Too many checkout attempts. Please try again later.' }, { status: 429 })
   }
 
   const body = await req.json()
   const priceId = body.priceId
   
   if (!priceId) {
-      return new NextResponse('Price ID required', { status: 400 })
+      return NextResponse.json({ error: 'Price ID required' }, { status: 400 })
   }
 
   const plan = PLANS.find(p => p.priceId === priceId)
   if (!plan) {
-      return new NextResponse('Invalid Price ID', { status: 400 })
+      return NextResponse.json({ error: 'Invalid Price ID' }, { status: 400 })
   }
 
   try {
@@ -50,6 +51,13 @@ export async function POST(req: Request) {
         }
     }
 
+    const forwardedHost = req.headers.get('x-forwarded-host')
+    const forwardedProto = req.headers.get('x-forwarded-proto') || 'https'
+    const requestOrigin = forwardedHost ? `${forwardedProto}://${forwardedHost}` : new URL(req.url).origin
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || requestOrigin
+    const cookieStore = await cookies()
+    const locale = cookieStore.get('NEXT_LOCALE')?.value || 'tr'
+
     const result = await paymentProvider.createCheckoutSession({
         user: paymentUser,
         items: [{
@@ -60,7 +68,9 @@ export async function POST(req: Request) {
             category: 'Subscription',
             priceId: plan.priceId
         }],
-        callbackUrl: `${process.env.NEXT_PUBLIC_APP_URL}/api/payment/callback`,
+        callbackUrl: `${baseUrl}/api/payment/callback`,
+        successUrl: `${baseUrl}/${locale}/dashboard/billing?success=true&session_id={CHECKOUT_SESSION_ID}`,
+        cancelUrl: `${baseUrl}/${locale}/dashboard/billing?canceled=true`,
         currency: 'TRY'
     })
 
@@ -69,10 +79,10 @@ export async function POST(req: Request) {
         return NextResponse.json({ url: result.url, provider: 'stripe' })
     }
 
-    return new NextResponse('Error creating session', { status: 500 })
+    return NextResponse.json({ error: 'Error creating session' }, { status: 500 })
 
   } catch (err: any) {
       logger.error('Checkout Error', user.id, { error: err.message })
-      return new NextResponse(err.message, { status: 500 })
+      return NextResponse.json({ error: err.message }, { status: 500 })
   }
 }

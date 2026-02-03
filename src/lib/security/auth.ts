@@ -27,7 +27,9 @@ export async function getAuthenticatedUser(): Promise<UserSession> {
     .from('subscriptions')
     .select('plan, status, current_period_end')
     .eq('user_id', user.id)
-    .single()
+    .order('current_period_end', { ascending: false })
+    .limit(1)
+    .maybeSingle()
 
   let plan = (subscription?.plan as PlanType) || 'free'
 

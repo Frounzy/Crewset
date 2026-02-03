@@ -62,7 +62,7 @@ export async function POST(req: Request) {
             current_period_end: new Date(
                 (stripeSubscription as any).current_period_end * 1000
             ).toISOString(),
-          })
+          }, { onConflict: 'user_id' })
 
         logger.info('Subscription created successfully', session.metadata.user_id, { plan, subscriptionId })
       }
@@ -111,7 +111,7 @@ export async function POST(req: Request) {
                     current_period_end: new Date(
                         (subscription as any).current_period_end * 1000
                     ).toISOString(),
-                })
+                }, { onConflict: 'user_id' })
              logger.info('Subscription updated', userId, { status: subscription.status })
         }
       }

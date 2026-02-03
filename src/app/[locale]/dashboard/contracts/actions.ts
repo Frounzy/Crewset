@@ -187,7 +187,7 @@ export async function endContractAction(id: string) {
 
 export async function createSignLinkAction(contractId: string, signerName?: string, signerEmail?: string) {
   const supabase = await createClient()
-  const user = await getAuthenticatedUser()
+  const user = await requirePlan('pro')
 
   try {
     await assertOwnership('contracts', contractId, user.id)

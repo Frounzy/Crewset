@@ -37,7 +37,7 @@ export type Contract = {
   signature_signed?: boolean
 }
 
-export const getColumns = (clients: any[], t: any): ColumnDef<Contract>[] => [
+export const getColumns = (clients: any[], t: any, subscriptionPlan?: string): ColumnDef<Contract>[] => [
   {
     accessorKey: 'name',
     header: ({ column }) => {
@@ -171,7 +171,11 @@ export const getColumns = (clients: any[], t: any): ColumnDef<Contract>[] => [
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => setShowEditDialog(true)}>Edit</DropdownMenuItem>
-                <DropdownMenuItem onClick={handleCreateSignLink}>İmza Linki Oluştur</DropdownMenuItem>
+                {subscriptionPlan === 'free' ? (
+                  <DropdownMenuItem disabled>İmza Linki Oluştur (Pro)</DropdownMenuItem>
+                ) : (
+                  <DropdownMenuItem onClick={handleCreateSignLink}>İmza Linki Oluştur</DropdownMenuItem>
+                )}
                 <DropdownMenuItem onClick={handleEnd}>Bitir</DropdownMenuItem>
                 <DropdownMenuItem onClick={handleDelete} className="text-red-600">Delete</DropdownMenuItem>
             </DropdownMenuContent>

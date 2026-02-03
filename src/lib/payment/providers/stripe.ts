@@ -32,14 +32,16 @@ export class StripeProvider implements PaymentProvider {
             },
         ],
         mode: 'subscription',
-        success_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/billing?success=true&session_id={CHECKOUT_SESSION_ID}`,
-        cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard/billing?canceled=true`,
+        success_url: params.successUrl,
+        cancel_url: params.cancelUrl,
         metadata: {
             user_id: user.id,
+            plan_slug: items[0]?.id,
         },
         subscription_data: {
             metadata: {
-                user_id: user.id
+                user_id: user.id,
+                plan_slug: items[0]?.id
             }
         }
     })

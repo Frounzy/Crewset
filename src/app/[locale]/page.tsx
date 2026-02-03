@@ -10,6 +10,7 @@ import { HowItWorksSection } from '@/components/landing/how-it-works-section'
 import { MobileAppSection } from '@/components/landing/mobile-app-section'
 import { createClient } from '@/lib/supabase/server'
 import { Link as LinkIcon, CheckCircle2, Clock } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://crewset.app'
@@ -48,6 +49,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
 export default async function Home() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  const t = await getTranslations('Landing.ApprovalLink')
 
   let userProp = null
   if (user) {
@@ -76,8 +78,8 @@ export default async function Home() {
         <section className="relative px-4 py-12">
           <div className="max-w-5xl mx-auto rounded-2xl border bg-card/60 backdrop-blur supports-[backdrop-filter]:bg-card/40 shadow-xl p-6 md:p-8">
             <div className="text-center space-y-2">
-              <h3 className="text-xl md:text-2xl font-bold tracking-tight">Müşteriye Özel Onay Linki</h3>
-              <p className="text-sm md:text-base text-muted-foreground">Sözleşme onayını hızlı, anlaşılır ve kontrollü şekilde alın.</p>
+              <h3 className="text-xl md:text-2xl font-bold tracking-tight">{t('title')}</h3>
+              <p className="text-sm md:text-base text-muted-foreground">{t('description')}</p>
             </div>
             <div className="mt-6 grid md:grid-cols-3 gap-4">
               <div className="flex items-start gap-3 p-3 rounded-lg bg-background/60 border">
@@ -85,8 +87,8 @@ export default async function Home() {
                   <LinkIcon className="h-5 w-5 text-primary" />
                 </div>
                 <div className="text-sm">
-                  <div className="font-medium">Link</div>
-                  <div className="text-muted-foreground">Her müşteri için kişiye özel bağlantı</div>
+                  <div className="font-medium">{t('items.link.title')}</div>
+                  <div className="text-muted-foreground">{t('items.link.desc')}</div>
                 </div>
               </div>
               <div className="flex items-start gap-3 p-3 rounded-lg bg-background/60 border">
@@ -94,8 +96,8 @@ export default async function Home() {
                   <CheckCircle2 className="h-5 w-5 text-green-500" />
                 </div>
                 <div className="text-sm">
-                  <div className="font-medium">Onay</div>
-                  <div className="text-muted-foreground">Tek adımda net ve anlaşılır onay</div>
+                  <div className="font-medium">{t('items.approve.title')}</div>
+                  <div className="text-muted-foreground">{t('items.approve.desc')}</div>
                 </div>
               </div>
               <div className="flex items-start gap-3 p-3 rounded-lg bg-background/60 border">
@@ -103,13 +105,13 @@ export default async function Home() {
                   <Clock className="h-5 w-5 text-purple-500" />
                 </div>
                 <div className="text-sm">
-                  <div className="font-medium">Kayıt</div>
-                  <div className="text-muted-foreground">Onay zamanı ve adımları saklanır</div>
+                  <div className="font-medium">{t('items.record.title')}</div>
+                  <div className="text-muted-foreground">{t('items.record.desc')}</div>
                 </div>
               </div>
             </div>
             <div className="mt-6 text-center text-xs md:text-sm text-muted-foreground">
-              Onay kayıtları düzenli tutulur; sonradan karışıklıkların önüne geçmeye yardımcı olur.
+              {t('footnote')}
             </div>
           </div>
         </section>

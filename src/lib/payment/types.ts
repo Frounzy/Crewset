@@ -24,6 +24,8 @@ export interface CheckoutSessionParams {
     priceId?: string
   }[]
   callbackUrl: string
+  successUrl: string
+  cancelUrl: string
   currency: string
 }
 

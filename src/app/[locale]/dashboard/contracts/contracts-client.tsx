@@ -13,7 +13,7 @@ interface ContractsClientProps {
 
 export function ContractsClient({ contracts, clients, subscriptionPlan }: ContractsClientProps) {
   const t = useTranslations('Contracts')
-  const columns = getColumns(clients, t)
+  const columns = getColumns(clients, t, subscriptionPlan)
 
   return (
     <div className="flex-1 space-y-4">

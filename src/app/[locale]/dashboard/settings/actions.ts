@@ -3,6 +3,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 import { getTranslations } from 'next-intl/server'
 import { z } from 'zod'
 
@@ -35,13 +36,13 @@ const contractTemplateSchema = z.object({
   contract_template: z.string().max(20000).optional(),
 })
 
-export async function saveContractTemplate(formData: FormData) {
+export async function saveContractTemplate(formData: FormData): Promise<void> {
   const t = await getTranslations('Settings')
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
-    return { error: t('unauthorized') }
+    return
   }
 
   const raw = {
@@ -49,7 +50,7 @@ export async function saveContractTemplate(formData: FormData) {
   }
   const validated = contractTemplateSchema.safeParse(raw)
   if (!validated.success) {
-    return { error: t('invalidData') || 'Geçersiz veri' }
+    return
   }
 
   const { error } = await supabase
@@ -58,8 +59,8 @@ export async function saveContractTemplate(formData: FormData) {
     .eq('id', user.id)
 
   if (error) {
-    return { error: error.message }
+    return
   }
 
-  return { success: t('success') || 'Kaydedildi' }
+  revalidatePath('/dashboard/settings')
 }
