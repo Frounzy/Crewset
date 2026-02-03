@@ -1,3 +1,8 @@
+import type { Metadata } from 'next'
+export const metadata: Metadata = {
+  title: 'Clients | Crewset',
+  robots: { index: false, follow: false },
+}
 import { createClient } from '@/lib/supabase/server'
 import { ClientsClient } from './clients-client'
 

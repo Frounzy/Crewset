@@ -23,26 +23,27 @@ function FAQItem({ question, answer }: FAQItemProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <div className="border rounded-lg bg-background overflow-hidden">
+    <div className="group rounded-xl border border-white/10 bg-card/50 backdrop-blur-sm shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full p-4 text-left font-medium transition-colors hover:bg-muted/50"
+        aria-expanded={isOpen}
+        className="flex items-center justify-between w-full p-5 text-left font-medium transition-colors hover:bg-white/5"
       >
-        <span>{question}</span>
+        <span className="leading-relaxed">{question}</span>
         <ChevronDown
           className={cn(
-            "h-4 w-4 text-muted-foreground transition-transform duration-200",
-            isOpen && "rotate-180"
+            "h-4 w-4 text-muted-foreground transition-transform duration-300 group-hover:text-primary",
+            isOpen && "rotate-180 text-primary"
           )}
         />
       </button>
       <div
         className={cn(
           "overflow-hidden transition-all duration-300 ease-in-out",
-          isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          isOpen ? "max-h-[480px] opacity-100" : "max-h-0 opacity-0"
         )}
       >
-        <div className="p-4 pt-0 text-muted-foreground text-sm leading-relaxed">
+        <div className="p-5 pt-0 border-t border-white/10 text-muted-foreground text-sm leading-relaxed">
           {answer}
         </div>
       </div>

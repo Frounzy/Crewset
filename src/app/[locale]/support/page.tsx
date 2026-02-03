@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { getTranslations } from 'next-intl/server';
 import { Button } from '@/components/ui/button';
 import { Mail, MessageSquare, Phone } from 'lucide-react';
@@ -5,6 +6,33 @@ import { Navbar } from '@/components/landing/navbar';
 import { Footer } from '@/components/landing/footer';
 import { ContactForm } from './contact-form';
 import { createClient } from '@/lib/supabase/server';
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://crewset.app'
+  const locale = params?.locale || 'en'
+  const canonicalPath = `/${locale}/support`
+  const title = 'Destek | Crewset'
+  const description = 'Sorularınız ve destek talepleriniz için Crewset ekibiyle iletişime geçin.'
+  return {
+    title,
+    description,
+    alternates: { canonical: canonicalPath },
+    openGraph: {
+      type: 'website',
+      url: canonicalPath,
+      title,
+      description,
+      siteName: 'Crewset',
+      locale,
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+    },
+    robots: { index: true, follow: true },
+  }
+}
 
 export default async function SupportPage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;

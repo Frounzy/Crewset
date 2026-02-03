@@ -16,10 +16,13 @@ export async function FAQ() {
   }))
 
   return (
-    <section id="faq" className="py-20 px-4 bg-muted/50">
-      <div className="max-w-3xl mx-auto space-y-12">
-        <div className="text-center space-y-4">
-          <h2 className="text-3xl font-bold">{t('title')}</h2>
+    <section
+      id="faq"
+      className="py-24 px-4 bg-gradient-to-b from-primary/5 via-muted/40 to-transparent"
+    >
+      <div className="max-w-4xl mx-auto space-y-12">
+        <div className="text-center space-y-3">
+          <h2 className="text-3xl font-bold tracking-tight">{t('title')}</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             {t('description')}
           </p>

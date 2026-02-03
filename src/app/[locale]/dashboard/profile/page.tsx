@@ -1,3 +1,8 @@
+import type { Metadata } from 'next'
+export const metadata: Metadata = {
+  title: 'Profile | Crewset',
+  robots: { index: false, follow: false },
+}
 import { createClient } from '@/lib/supabase/server'
 import { getAuthenticatedUser } from '@/lib/security/auth'
 import { ProfileClient } from './profile-client'

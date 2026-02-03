@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { notFound } from 'next/navigation'
 import Image from 'next/image'
@@ -15,8 +16,21 @@ import {
   Briefcase
 } from 'lucide-react'
 
-export const metadata = {
-  title: 'Profile | Crewset',
+export async function generateMetadata({ params }: { params: { username: string, locale: string } }): Promise<Metadata> {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://crewset.app'
+  const username = params?.username || 'user'
+  const locale = params?.locale || 'en'
+  const canonicalPath = `/${locale}/${username}`
+  const title = `${username} • Profil | Crewset`
+  const description = `${username} tarafından paylaşılan portföy ve bilgiler. Crewset ile müşteriler ve sözleşmeler tek yerde.`
+  return {
+    title,
+    description,
+    alternates: { canonical: canonicalPath },
+    robots: { index: true, follow: true },
+    openGraph: { type: 'profile', url: canonicalPath, title, description, siteName: 'Crewset', locale },
+    twitter: { card: 'summary', title, description },
+  }
 }
 
 interface Props {

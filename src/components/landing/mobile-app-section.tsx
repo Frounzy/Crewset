@@ -9,8 +9,8 @@ export async function MobileAppSection() {
       <div className="max-w-5xl mx-auto">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-24">
           <div className="flex-1 space-y-6 text-center md:text-left z-10">
-            <div className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors border-transparent bg-primary text-primary-foreground hover:bg-primary/80">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-3 h-3 mr-1">
+            <div className="inline-flex items-center rounded-full border px-4 py-1.5 text-sm font-medium transition-colors border-primary/40 bg-primary text-primary-foreground hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary/30">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 mr-2">
                 <rect x="7" y="2" width="10" height="20" rx="2" ry="2"></rect>
                 <path d="M11 18h2"></path>
               </svg>
@@ -41,7 +41,6 @@ export async function MobileAppSection() {
           </div>
           
           <div className="flex-1 relative w-full flex justify-center md:justify-end">
-             {/* Abstract Phone UI */}
              <div className="relative border-gray-800 dark:border-gray-800 bg-gray-800 border-[14px] rounded-[2.5rem] h-[600px] w-[300px] shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500">
                 <div className="w-[148px] h-[18px] bg-gray-800 top-0 rounded-b-[1rem] left-1/2 -translate-x-1/2 absolute"></div>
                 <div className="h-[32px] w-[3px] bg-gray-800 absolute -start-[17px] top-[72px] rounded-s-lg"></div>
@@ -49,65 +48,51 @@ export async function MobileAppSection() {
                 <div className="h-[46px] w-[3px] bg-gray-800 absolute -start-[17px] top-[178px] rounded-s-lg"></div>
                 <div className="h-[64px] w-[3px] bg-gray-800 absolute -end-[17px] top-[142px] rounded-e-lg"></div>
                 <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white dark:bg-zinc-950 flex flex-col">
-                    {/* Screen Content */}
-                    <div className="h-40 bg-primary p-6 pt-12 flex flex-col justify-end text-primary-foreground relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-8 opacity-10">
-                           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className="w-32 h-32">
-                              <rect x="7" y="2" width="10" height="20" rx="2" ry="2"></rect>
-                              <path d="M11 18h2"></path>
-                           </svg>
-                        </div>
-                        <div className="w-12 h-12 rounded-full bg-white/20 mb-3 flex items-center justify-center backdrop-blur-sm">
-                            <span className="font-bold text-lg">C</span>
-                        </div>
-                        <div className="text-xl font-bold">{t('phone.greeting')}</div>
-                        <div className="text-sm opacity-80">{t('phone.contractsApproaching')}</div>
+                    <div className="h-40 bg-gradient-to-br from-primary to-violet-600 p-6 pt-12 text-primary-foreground relative overflow-hidden">
+                        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_30%_20%,#ffffff33_0,transparent_40%),radial-gradient(circle_at_70%_0%,#00000022_0,transparent_50%)]"></div>
+                        <div className="absolute top-4 left-4 rounded-full px-3 py-1 bg-white/20 backdrop-blur text-sm font-semibold">C</div>
+                        <div className="text-2xl font-bold tracking-tight">{t('phone.greeting')}</div>
+                        <div className="text-sm/relaxed opacity-90">{t('phone.contractsApproaching')}</div>
                     </div>
                     
                     <div className="p-4 space-y-3 flex-1 bg-zinc-50 dark:bg-zinc-900/50">
                         <div className="text-xs font-semibold text-muted-foreground uppercase tracking-wider ml-1">{t('phone.upcoming')}</div>
                         
-                        <div className="p-3 rounded-xl bg-white dark:bg-zinc-900 border shadow-sm flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-red-100 text-red-600">
-                                <span className="font-bold text-xs">2G</span>
-                            </div>
+                        <div className="p-3 rounded-xl bg-white dark:bg-zinc-900/70 border border-border shadow-sm flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-orange-100 text-orange-700 font-bold text-xs">2G</div>
                             <div className="flex-1 min-w-0">
                                 <div className="font-medium text-sm truncate">{t('phone.contract1')}</div>
                                 <div className="text-xs text-muted-foreground truncate">{t('phone.contract1Date')}</div>
                             </div>
-                            <div className="w-2 h-2 rounded-full bg-primary"></div>
+                            <div className="w-2 h-2 rounded-full bg-violet-500"></div>
                         </div>
 
-                        <div className="p-3 rounded-xl bg-white dark:bg-zinc-900 border shadow-sm flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-orange-100 text-orange-600">
-                                <span className="font-bold text-xs">4G</span>
-                            </div>
+                        <div className="p-3 rounded-xl bg-white dark:bg-zinc-900/70 border border-border shadow-sm flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-amber-100 text-amber-700 font-bold text-xs">4G</div>
                             <div className="flex-1 min-w-0">
                                 <div className="font-medium text-sm truncate">{t('phone.contract2')}</div>
                                 <div className="text-xs text-muted-foreground truncate">{t('phone.contract2Date')}</div>
                             </div>
-                            <div className="w-2 h-2 rounded-full bg-primary"></div>
+                            <div className="w-2 h-2 rounded-full bg-violet-500"></div>
                         </div>
 
-                        <div className="p-3 rounded-xl bg-white dark:bg-zinc-900 border shadow-sm flex items-center gap-3">
-                            <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-orange-100 text-orange-600">
-                                <span className="font-bold text-xs">6G</span>
-                            </div>
+                        <div className="p-3 rounded-xl bg-white dark:bg-zinc-900/70 border border-border shadow-sm flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-rose-100 text-rose-700 font-bold text-xs">6G</div>
                             <div className="flex-1 min-w-0">
                                 <div className="font-medium text-sm truncate">{t('phone.contract3')}</div>
                                 <div className="text-xs text-muted-foreground truncate">{t('phone.contract3Date')}</div>
                             </div>
-                            <div className="w-2 h-2 rounded-full bg-primary"></div>
+                            <div className="w-2 h-2 rounded-full bg-violet-500"></div>
                         </div>
 
-                        <div className="mt-6 p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20 border border-blue-100 dark:border-blue-900/50">
-                            <div className="text-sm font-medium text-blue-800 dark:text-blue-300 mb-1">{t('phone.revenueAnalytics')}</div>
+                        <div className="mt-6 p-4 rounded-xl bg-gradient-to-br from-indigo-50 to-violet-50 dark:from-indigo-900/20 dark:to-violet-900/20 border border-indigo-100 dark:border-indigo-900/40">
+                            <div className="text-sm font-medium text-indigo-800 dark:text-indigo-300 mb-1">{t('phone.revenueAnalytics')}</div>
                             <div className="flex items-end gap-2 h-16 justify-between px-2">
-                                <div className="w-4 bg-blue-200 dark:bg-blue-800 h-[40%] rounded-t"></div>
-                                <div className="w-4 bg-blue-200 dark:bg-blue-800 h-[60%] rounded-t"></div>
-                                <div className="w-4 bg-blue-500 h-[80%] rounded-t"></div>
-                                <div className="w-4 bg-blue-200 dark:bg-blue-800 h-[50%] rounded-t"></div>
-                                <div className="w-4 bg-blue-200 dark:bg-blue-800 h-[70%] rounded-t"></div>
+                                <div className="w-4 h-[40%] rounded-t bg-gradient-to-t from-indigo-200 to-indigo-400 dark:from-indigo-800 dark:to-indigo-600"></div>
+                                <div className="w-4 h-[60%] rounded-t bg-gradient-to-t from-indigo-200 to-indigo-400 dark:from-indigo-800 dark:to-indigo-600"></div>
+                                <div className="w-4 h-[80%] rounded-t bg-gradient-to-t from-violet-300 to-violet-500 dark:from-violet-700 dark:to-violet-500"></div>
+                                <div className="w-4 h-[50%] rounded-t bg-gradient-to-t from-indigo-200 to-indigo-400 dark:from-indigo-800 dark:to-indigo-600"></div>
+                                <div className="w-4 h-[70%] rounded-t bg-gradient-to-t from-indigo-200 to-indigo-400 dark:from-indigo-800 dark:to-indigo-600"></div>
                             </div>
                         </div>
                     </div>

@@ -64,10 +64,10 @@ export async function generateMetadata({ params }: { params: { locale: string } 
       index: true,
       follow: true
     },
+    themeColor: "#ffffff",
     viewport: {
       width: "device-width",
-      initialScale: 1,
-      themeColor: "#ffffff"
+      initialScale: 1
     }
   }
 }
