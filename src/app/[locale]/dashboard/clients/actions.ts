@@ -8,6 +8,13 @@ import { getAuthenticatedUser } from '@/lib/security/auth'
 const clientSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100, 'Name too long'),
   email: z.string().email('Invalid email').optional().or(z.literal('')),
+  phone: z
+    .string()
+    .optional()
+    .or(z.literal(''))
+    .refine((val) => !val || /^[+()0-9\s-]{7,20}$/.test(val), {
+      message: 'Invalid phone number',
+    }),
   company: z.string().max(100, 'Company name too long').optional(),
   notes: z.string().max(1000, 'Notes too long').optional(),
 })
@@ -31,6 +38,7 @@ export async function createClientAction(formData: FormData) {
   const rawData = {
     name: formData.get('name') as string,
     email: formData.get('email') as string,
+    phone: formData.get('phone') as string,
     company: formData.get('company') as string,
     notes: formData.get('notes') as string,
   }
@@ -38,7 +46,8 @@ export async function createClientAction(formData: FormData) {
   const validatedFields = clientSchema.safeParse(rawData)
 
   if (!validatedFields.success) {
-    return { error: 'Invalid fields: ' + validatedFields.error.errors[0].message }
+    const firstIssue = validatedFields.error.issues?.[0]
+    return { error: 'Invalid fields: ' + (firstIssue?.message || 'Validation error') }
   }
 
   const { error } = await supabase.from('clients').insert({
@@ -73,6 +82,7 @@ export async function updateClientAction(id: string, formData: FormData) {
   const rawData = {
     name: formData.get('name') as string,
     email: formData.get('email') as string,
+    phone: formData.get('phone') as string,
     company: formData.get('company') as string,
     notes: formData.get('notes') as string,
   }

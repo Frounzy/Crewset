@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { redirect } from 'next/navigation'
 import { getTranslations } from 'next-intl/server'
+import { z } from 'zod'
 
 export async function deleteAccountAction() {
   const t = await getTranslations('Settings')
@@ -28,4 +29,37 @@ export async function deleteAccountAction() {
   }
 
   return { success: true }
+}
+
+const contractTemplateSchema = z.object({
+  contract_template: z.string().max(20000).optional(),
+})
+
+export async function saveContractTemplate(formData: FormData) {
+  const t = await getTranslations('Settings')
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) {
+    return { error: t('unauthorized') }
+  }
+
+  const raw = {
+    contract_template: (formData.get('contract_template') as string) || ''
+  }
+  const validated = contractTemplateSchema.safeParse(raw)
+  if (!validated.success) {
+    return { error: t('invalidData') || 'Geçersiz veri' }
+  }
+
+  const { error } = await supabase
+    .from('profiles')
+    .update({ contract_template: validated.data.contract_template })
+    .eq('id', user.id)
+
+  if (error) {
+    return { error: error.message }
+  }
+
+  return { success: t('success') || 'Kaydedildi' }
 }

@@ -21,6 +21,22 @@ export default async function ContractsPage() {
     .select('*')
     .order('name', { ascending: true })
 
+  // Compute signature status (any used sign link)
+  const signedSet = new Set<string>()
+  if (contracts && contracts.length > 0) {
+    const contractIds = contracts.map((c: any) => c.id)
+    const { data: links } = await supabase
+      .from('contract_sign_links')
+      .select('contract_id, used_at')
+      .in('contract_id', contractIds)
+    links?.forEach((l: any) => {
+      if (l.used_at) signedSet.add(l.contract_id)
+    })
+    contracts.forEach((c: any) => {
+      c.signature_signed = signedSet.has(c.id)
+    })
+  }
+
   // Fetch subscription plan
   const { data: { user } } = await supabase.auth.getUser()
   let subscriptionPlan = 'free'

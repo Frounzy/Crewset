@@ -321,6 +321,7 @@
     "form": {
       "name": "İsim",
       "email": "E-posta",
+      "phone": "Telefon",
       "company": "Şirket",
       "notes": "Notlar",
       "save": "Değişiklikleri kaydet"

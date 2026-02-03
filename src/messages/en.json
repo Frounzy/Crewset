@@ -318,6 +318,7 @@
     "form": {
       "name": "Name",
       "email": "Email",
+      "phone": "Phone",
       "company": "Company",
       "notes": "Notes",
       "save": "Save changes"

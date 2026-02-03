@@ -13,7 +13,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ContractDialog } from './contract-dialog'
 import { useState } from 'react'
-import { deleteContractAction } from './actions'
+import { deleteContractAction, endContractAction } from './actions'
+import { SignLinkDialog } from './sign-link-dialog'
 import { format, differenceInDays } from 'date-fns'
 import { Badge } from '@/components/ui/badge'
 
@@ -33,6 +34,7 @@ export type Contract = {
   client?: {
       name: string
   }
+  signature_signed?: boolean
 }
 
 export const getColumns = (clients: any[], t: any): ColumnDef<Contract>[] => [
@@ -115,16 +117,36 @@ export const getColumns = (clients: any[], t: any): ColumnDef<Contract>[] => [
     }
   },
   {
+    accessorKey: 'signature_signed',
+    header: 'İmza',
+    cell: ({ row }) => {
+      const signed = !!row.original.signature_signed
+      return <Badge variant={signed ? 'outline' : 'secondary'}>{signed ? 'Onaylandı' : 'Bekliyor'}</Badge>
+    }
+  },
+  {
     id: 'actions',
     cell: ({ row }) => {
       const contract = row.original
       // eslint-disable-next-line react-hooks/rules-of-hooks
       const [showEditDialog, setShowEditDialog] = useState(false)
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const [showSignDialog, setShowSignDialog] = useState(false)
 
       const handleDelete = async () => {
           if (confirm('Are you sure you want to delete this contract?')) {
               await deleteContractAction(contract.id)
           }
+      }
+      
+      const handleEnd = async () => {
+          if (confirm('Sözleşmeyi şimdi bitirmek istediğinize emin misiniz?')) {
+              await endContractAction(contract.id)
+          }
+      }
+      
+      const handleCreateSignLink = async () => {
+          setShowSignDialog(true)
       }
 
       return (
@@ -149,9 +171,12 @@ export const getColumns = (clients: any[], t: any): ColumnDef<Contract>[] => [
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => setShowEditDialog(true)}>Edit</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleCreateSignLink}>İmza Linki Oluştur</DropdownMenuItem>
+                <DropdownMenuItem onClick={handleEnd}>Bitir</DropdownMenuItem>
                 <DropdownMenuItem onClick={handleDelete} className="text-red-600">Delete</DropdownMenuItem>
             </DropdownMenuContent>
             </DropdownMenu>
+            <SignLinkDialog contractId={contract.id} open={showSignDialog} onOpenChange={setShowSignDialog} />
         </>
       )
     },

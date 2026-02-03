@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { Loader2, Plus } from 'lucide-react'
+import { Loader2, Plus, Pencil } from 'lucide-react'
 import { format } from 'date-fns'
 
 import { Button } from '@/components/ui/button'
@@ -159,7 +159,15 @@ export function ContractDialog({ contract, clients, trigger, open, onOpenChange,
       <DialogTrigger asChild>
         {trigger || (
           <Button disabled={limitReached}>
-            <Plus className="mr-2 h-4 w-4" /> {t('addContract')}
+            {isEditing ? (
+              <>
+                <Pencil className="mr-2 h-4 w-4" /> {t('editContract')}
+              </>
+            ) : (
+              <>
+                <Plus className="mr-2 h-4 w-4" /> {t('addContract')}
+              </>
+            )}
           </Button>
         )}
       </DialogTrigger>

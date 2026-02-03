@@ -4,6 +4,8 @@ import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { getAuthenticatedUser, requirePlan, assertOwnership } from '@/lib/security/auth'
+import { checkRateLimit } from '@/lib/security/rate-limit'
+import crypto from 'crypto'
 
 const contractSchema = z.object({
   name: z.string().min(1, 'Name is required'),
@@ -152,4 +154,73 @@ export async function deleteContractAction(id: string) {
 
   revalidatePath('/dashboard/contracts')
   return { success: 'Contract deleted successfully' }
+}
+
+export async function endContractAction(id: string) {
+  const supabase = await createClient()
+  const user = await getAuthenticatedUser()
+  
+  try {
+    await assertOwnership('contracts', id, user.id)
+  } catch (e) {
+    return { error: 'Unauthorized' }
+  }
+
+  const today = new Date().toISOString().split('T')[0]
+
+  const { error } = await supabase
+    .from('contracts')
+    .update({
+      status: 'expired',
+      end_date: today,
+    })
+    .eq('id', id)
+    .eq('user_id', user.id)
+
+  if (error) {
+    return { error: error.message }
+  }
+
+  revalidatePath('/dashboard/contracts')
+  return { success: 'Contract ended' }
+}
+
+export async function createSignLinkAction(contractId: string, signerName?: string, signerEmail?: string) {
+  const supabase = await createClient()
+  const user = await getAuthenticatedUser()
+
+  try {
+    await assertOwnership('contracts', contractId, user.id)
+  } catch {
+    return { error: 'Unauthorized' }
+  }
+
+  const { success } = await checkRateLimit(`sign_link:${user.id}`, 10, 3600)
+  if (!success) {
+    return { error: 'Rate limit exceeded. Please try later.' }
+  }
+
+  const token = crypto.randomBytes(24).toString('hex')
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+
+  const { data, error } = await supabase
+    .from('contract_sign_links')
+    .insert({
+      user_id: user.id,
+      contract_id: contractId,
+      token,
+      expires_at: expiresAt,
+      signer_name: signerName || null,
+      signer_email: signerEmail || null,
+    })
+    .select('id, token')
+    .single()
+
+  if (error) {
+    return { error: error.message }
+  }
+
+  const url = `${process.env.NEXT_PUBLIC_APP_URL}/sign/${data.token}`
+  revalidatePath('/dashboard/contracts')
+  return { success: 'Sign link created', url }
 }

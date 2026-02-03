@@ -62,7 +62,7 @@ export async function Features() {
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature) => (
-            <div key={feature.key} className="group relative rounded-2xl bg-background/50 p-[1px] transition-all hover:shadow-2xl group-hover:-translate-y-1">
+            <div key={feature.key} className="group relative rounded-2xl bg-background/50 p-[1px] overflow-hidden transition-all hover:shadow-2xl">
               <Card className="rounded-2xl bg-background/70 backdrop-blur-sm border border-border hover:border-primary/40 hover:bg-background/80 hover:shadow-xl transition-colors">
                 <CardHeader>
                   <div className="flex items-center gap-3">
@@ -79,7 +79,7 @@ export async function Features() {
                 </CardContent>
               </Card>
               <div className={`pointer-events-none absolute -top-20 -right-20 h-44 w-44 rounded-full blur-2xl opacity-0 group-hover:opacity-20 transition bg-gradient-to-br ${accents[feature.key]}`} />
-              <div className="pointer-events-none absolute inset-x-0 -bottom-16 h-24 bg-gradient-to-t from-primary/15 to-transparent opacity-0 group-hover:opacity-100 transition" />
+              <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-primary/15 to-transparent opacity-0 group-hover:opacity-100 transition" />
             </div>
           ))}
         </div>

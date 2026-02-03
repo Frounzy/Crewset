@@ -43,6 +43,7 @@ export async function updateSession(request: NextRequest, response: NextResponse
     !pathWithoutLocale.startsWith('/register') &&
     !pathWithoutLocale.startsWith('/forgot-password') &&
     !pathWithoutLocale.startsWith('/update-password') &&
+    !pathWithoutLocale.startsWith('/sign') &&
     !pathWithoutLocale.startsWith('/api') && // Exclude API routes from auth redirect if they are public (some might be)
     pathWithoutLocale !== '/'
   ) {

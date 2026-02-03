@@ -4,7 +4,7 @@ import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
-import { Loader2, Plus } from 'lucide-react'
+import { Loader2, Plus, Pencil } from 'lucide-react'
 import { useTranslations } from 'next-intl'
 
 import { Button } from '@/components/ui/button'
@@ -32,6 +32,13 @@ import { createClientAction, updateClientAction } from './actions'
 const formSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   email: z.string().email().optional().or(z.literal('')),
+  phone: z
+    .string()
+    .optional()
+    .or(z.literal(''))
+    .refine((val) => !val || /^[+()0-9\s-]{7,20}$/.test(val), {
+      message: 'Invalid phone number',
+    }),
   company: z.string().optional(),
   notes: z.string().optional(),
 })
@@ -60,6 +67,7 @@ export function ClientDialog({ client, trigger, open, onOpenChange, subscription
     defaultValues: {
       name: client?.name || '',
       email: client?.email || '',
+      phone: client?.phone || '',
       company: client?.company || '',
       notes: client?.notes || '',
     },
@@ -101,7 +109,15 @@ export function ClientDialog({ client, trigger, open, onOpenChange, subscription
       <DialogTrigger asChild>
         {trigger || (
           <Button disabled={limitReached}>
-            <Plus className="mr-2 h-4 w-4" /> {t('addClient')}
+            {isEditing ? (
+              <>
+                <Pencil className="mr-2 h-4 w-4" /> {t('editClient')}
+              </>
+            ) : (
+              <>
+                <Plus className="mr-2 h-4 w-4" /> {t('addClient')}
+              </>
+            )}
           </Button>
         )}
       </DialogTrigger>
@@ -137,6 +153,19 @@ export function ClientDialog({ client, trigger, open, onOpenChange, subscription
                   <FormLabel>{t('form.email')}</FormLabel>
                   <FormControl>
                     <Input placeholder="john@example.com" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="phone"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>{t('form.phone') || 'Telefon'}</FormLabel>
+                  <FormControl>
+                    <Input placeholder="+90 555 555 55 55" type="tel" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

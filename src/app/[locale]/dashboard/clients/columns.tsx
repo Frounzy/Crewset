@@ -21,9 +21,11 @@ export type Client = {
   id: string
   name: string
   email: string | null
+  phone: string | null
   company: string | null
   notes: string | null
   created_at: string
+  contracts_count?: number
 }
 
 export const columns: ColumnDef<Client>[] = [
@@ -48,6 +50,14 @@ export const columns: ColumnDef<Client>[] = [
   {
     accessorKey: 'email',
     header: 'Email',
+  },
+  {
+    accessorKey: 'phone',
+    header: 'Phone',
+  },
+  {
+    accessorKey: 'contracts_count',
+    header: 'Contracts',
   },
   {
     id: 'actions',

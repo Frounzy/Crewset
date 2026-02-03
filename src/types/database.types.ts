@@ -17,6 +17,7 @@ export interface Database {
           user_id: string
           name: string
           email: string | null
+          phone: string | null
           company: string | null
           notes: string | null
         }
@@ -27,6 +28,7 @@ export interface Database {
           user_id: string
           name: string
           email?: string | null
+          phone?: string | null
           company?: string | null
           notes?: string | null
         }
@@ -37,6 +39,7 @@ export interface Database {
           user_id?: string
           name?: string
           email?: string | null
+          phone?: string | null
           company?: string | null
           notes?: string | null
         }

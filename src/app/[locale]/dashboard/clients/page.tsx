@@ -33,9 +33,25 @@ export default async function ClientsPage() {
     console.error('Error fetching clients:', JSON.stringify(error, null, 2))
   }
 
+  // Compute contract counts per client
+  const { data: contracts } = await supabase
+    .from('contracts')
+    .select('client_id')
+    .eq('user_id', user?.id || '')
+
+  const countMap = new Map<string, number>()
+  contracts?.forEach((c: any) => {
+    countMap.set(c.client_id, (countMap.get(c.client_id) || 0) + 1)
+  })
+
+  const clientsWithCounts = (clients as any[] || []).map((c: any) => ({
+    ...c,
+    contracts_count: countMap.get(c.id) || 0,
+  }))
+
   return (
     <ClientsClient 
-      clients={clients as any[] || []} 
+      clients={clientsWithCounts} 
       subscriptionPlan={subscriptionPlan}
     />
   )
