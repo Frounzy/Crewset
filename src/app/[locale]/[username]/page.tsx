@@ -18,7 +18,7 @@ import {
 
 export async function generateMetadata({ params }: { params: { username: string, locale: string } }): Promise<Metadata> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://crewset.app'
-  const username = params?.username || 'user'
+  const username = params?.username
   const locale = params?.locale || 'en'
   const canonicalPath = `/${locale}/${username}`
   const title = `${username} • Profil | Crewset`
