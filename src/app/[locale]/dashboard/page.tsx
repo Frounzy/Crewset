@@ -2,10 +2,12 @@ import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { DollarSign, Users, CreditCard, Activity, Lock, AlertTriangle } from "lucide-react"
-import { addDays, isAfter, isBefore, parseISO } from 'date-fns'
+import { addDays, isAfter, isBefore, parseISO, differenceInCalendarDays } from 'date-fns'
 import { getTranslations } from 'next-intl/server'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
+import { OverviewClient } from './overview-client'
+import { ActivityFeedClient, ActivityEvent } from './activity-feed-client'
 
 export const metadata: Metadata = {
   title: 'Dashboard | Crewset',
@@ -27,6 +29,8 @@ export default async function DashboardPage() {
     end_date: string
     value_amount: number
     value_period: 'monthly' | 'yearly'
+    created_at?: string
+    updated_at?: string
     client?: { name: string | null; email: string | null }
   }
 
@@ -34,6 +38,25 @@ export default async function DashboardPage() {
     .from('contracts')
     .select('*, client:clients(name, email)')
     .order('created_at', { ascending: false })
+  
+  // Sign events (used_at indicates signature completed)
+  let signMap = new Map<string, string>()
+  if (contracts && contracts.length > 0) {
+    const contractIds = (contracts as any[]).map((c: any) => c.id)
+    const { data: links } = await supabase
+      .from('contract_sign_links')
+      .select('contract_id, used_at')
+      .in('contract_id', contractIds)
+    links?.forEach((l: any) => {
+      if (l.used_at) {
+        // keep latest used_at per contract
+        const prev = signMap.get(l.contract_id)
+        if (!prev || new Date(l.used_at).getTime() > new Date(prev).getTime()) {
+          signMap.set(l.contract_id, l.used_at)
+        }
+      }
+    })
+  }
   
   const { data: subscription } = await supabase
     .from('subscriptions')
@@ -72,8 +95,114 @@ export default async function DashboardPage() {
     const endDate = parseISO(curr.end_date)
     return isAfter(endDate, today) && isBefore(endDate, thirtyDaysFromNow)
   }).length
+  
+  let nearestDays = 0
+  const expiringDays = activeContracts
+    .map((curr: ContractRow) => {
+      const endDate = parseISO(curr.end_date)
+      if (isAfter(endDate, today) && isBefore(endDate, thirtyDaysFromNow)) {
+        const daysLeft = Math.max(0, differenceInCalendarDays(endDate, today))
+        return daysLeft
+      }
+      return null
+    })
+    .filter((d): d is number => d !== null)
+  
+  if (expiringDays.length > 0) {
+    nearestDays = Math.min(...expiringDays)
+  }
 
-  const recentContracts: ContractRow[] = typedContracts.slice(0, 5)
+  // Build Activity events
+  const activityEvents: ActivityEvent[] = []
+  for (const c of typedContracts) {
+    if (c.created_at) {
+      activityEvents.push({
+        id: c.id,
+        type: 'created',
+        contractId: c.id,
+        contractName: c.name,
+        clientName: c.client?.name,
+        at: c.created_at,
+      })
+    }
+    const signedAt = signMap.get(c.id)
+    if (signedAt) {
+      activityEvents.push({
+        id: c.id,
+        type: 'signed',
+        contractId: c.id,
+        contractName: c.name,
+        clientName: c.client?.name,
+        at: signedAt,
+      })
+    }
+    if (c.status === 'renewed' && c.updated_at) {
+      activityEvents.push({
+        id: c.id,
+        type: 'renewed',
+        contractId: c.id,
+        contractName: c.name,
+        clientName: c.client?.name,
+        at: c.updated_at,
+      })
+    }
+    const endDate = parseISO(c.end_date)
+    if (c.status === 'active' && isAfter(endDate, today) && isBefore(endDate, thirtyDaysFromNow)) {
+      activityEvents.push({
+        id: c.id,
+        type: 'expiring',
+        contractId: c.id,
+        contractName: c.name,
+        clientName: c.client?.name,
+        at: c.end_date,
+      })
+    }
+  }
+  
+  // Fetch tasks for dashboard widgets and task activities
+  const { data: subOrg } = await supabase
+    .from('subscriptions')
+    .select('organization_id')
+    .eq('user_id', user?.id || '')
+    .single()
+  const orgId = subOrg?.organization_id
+  
+  let tasks: any[] = []
+  let taskActivities: any[] = []
+  if (orgId) {
+    const { data: t } = await supabase
+      .from('tasks')
+      .select('*, assignee:profiles(full_name, email), contract:contracts(name)')
+      .eq('organization_id', orgId)
+      .order('due_date', { ascending: true })
+    tasks = t || []
+    
+    const { data: ta } = await supabase
+      .from('task_activities')
+      .select('*')
+      .eq('organization_id', orgId)
+      .order('created_at', { ascending: false })
+      .limit(10)
+    taskActivities = ta || []
+  }
+  
+  // Merge task activities into activity feed
+  for (const a of taskActivities) {
+    const base = {
+      id: a.task_id,
+      contractId: a.task_id,
+      contractName: tasks.find((t: any) => t.id === a.task_id)?.title || 'Görev',
+      clientName: tasks.find((t: any) => t.id === a.task_id)?.assignee?.full_name || tasks.find((t: any) => t.id === a.task_id)?.assignee?.email,
+      at: a.created_at,
+    }
+    if (a.action === 'task_created') {
+      activityEvents.push({ ...base, type: 'task_created' })
+    } else if (a.action === 'task_assigned') {
+      activityEvents.push({ ...base, type: 'task_assigned' })
+    } else if (a.action === 'task_completed') {
+      activityEvents.push({ ...base, type: 'task_completed' })
+    }
+  }
 
   const formatCurrency = (amount: number) => {
       return new Intl.NumberFormat('en-US', {
@@ -145,7 +274,7 @@ export default async function DashboardPage() {
                 <>
                     <div className="text-2xl font-bold text-red-500">{formatCurrency(revenueAtRisk)}</div>
                     <p className="text-xs text-muted-foreground">
-                    {t('contractsExpiringSoon', { count: expiringCount })}
+                    {t('contractsExpiringSoon', { count: expiringCount, days: nearestDays || 30 })}
                     </p>
                 </>
             )}
@@ -172,37 +301,35 @@ export default async function DashboardPage() {
             <CardTitle>Overview</CardTitle>
           </CardHeader>
           <CardContent className="pl-2">
-             <div className="h-[200px] flex items-center justify-center text-muted-foreground bg-muted/20 rounded-md">
-                No enough data for chart
-             </div>
+            <OverviewClient contracts={activeContracts as any[]} />
           </CardContent>
         </Card>
-        <Card className="col-span-3">
-          <CardHeader>
-            <CardTitle>{t('recentActivity')}</CardTitle>
-            <div className="text-sm text-muted-foreground">
-              Latest contracts added to the platform.
-            </div>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-8">
-                {recentContracts.length === 0 && (
-                    <div className="text-sm text-muted-foreground">No contracts found.</div>
-                )}
-                {recentContracts.map((contract: ContractRow) => (
-                    <div className="flex items-center" key={contract.id}>
-                        <div className="ml-4 space-y-1">
-                            <p className="text-sm font-medium leading-none">{contract.name}</p>
-                            <p className="text-sm text-muted-foreground">{contract.client?.name}</p>
-                        </div>
-                        <div className="ml-auto font-medium">
-                            {formatCurrency(Number(contract.value_amount))}
-                        </div>
+        <div className="col-span-3 space-y-4">
+          <div className="space-y-2">
+            <h3 className="text-sm font-medium">Bana Atanan Görevler</h3>
+            <div className="space-y-2">
+              {tasks.filter((t: any) => t.assignee_id === user?.id).slice(0,5).map((t: any) => (
+                <Link key={t.id} href={`/dashboard/tasks/${t.id}`} className="block">
+                  <div className="flex items-center gap-3 p-2 rounded-lg border hover:border-primary/40 transition-colors">
+                    <div className="ml-1 space-y-1">
+                      <p className="text-sm font-medium leading-none">{t.title}</p>
+                      <p className="text-xs text-muted-foreground">
+                        {t.contract?.name || 'Görev'} • {new Date(t.due_date).toLocaleDateString()}
+                      </p>
                     </div>
-                ))}
+                  </div>
+                </Link>
+              ))}
+              {tasks.filter((t: any) => t.assignee_id === user?.id).length === 0 && (
+                <div className="text-sm text-muted-foreground">Size atanmış görev yok.</div>
+              )}
             </div>
-          </CardContent>
-        </Card>
+          </div>
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-medium">{t('recentActivity')}</h3>
+          </div>
+          <ActivityFeedClient events={activityEvents} />
+        </div>
       </div>
     </div>
   )

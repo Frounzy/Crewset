@@ -227,6 +227,7 @@
     "dashboard": "Dashboard",
     "clients": "Clients",
     "contracts": "Contracts",
+    "tasks": "Tasks",
     "reports": "Reports",
     "billing": "Billing",
     "profile": "Profile",
@@ -287,7 +288,17 @@
     }
   },
   "Dashboard": {
-    "title": "Dashboard"
+    "title": "Dashboard",
+    "totalAnnualRevenue": "Total Annual Revenue",
+    "activeContracts": "Active Contracts",
+    "revenueAtRisk": "Revenue at Risk",
+    "contractsExpiringSoon": "{count} contracts expire in {days} days",
+    "subscriptionPlan": "Subscription Plan",
+    "currentPlan": "Current plan: {plan}",
+    "recentActivity": "Recent Activity",
+    "upgradeToPro": "Upgrade to Pro to see this",
+    "paymentFailed": "Your payment failed. Please update billing details.",
+    "updateBilling": "Update Billing"
   },
   "Clients": {
     "title": "Clients",

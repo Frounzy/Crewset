@@ -273,6 +273,7 @@
     "billing": "Faturalandırma",
     "settings": "Ayarlar",
     "team": "Takım",
+    "tasks": "Görevler",
     "profile": "Profil",
     "support": "Destek"
   },
@@ -306,7 +307,7 @@
     "renewalProbability": "Ort. Yenileme Olasılığı",
     "acrossActiveContracts": "{count} aktif sözleşme üzerinden",
     "totalActiveContracts": "Toplam aktif sözleşme",
-    "contractsExpiringSoon": "{count} sözleşme 30 gün içinde sona eriyor",
+    "contractsExpiringSoon": "{count} sözleşme {days} gün içinde sona eriyor",
     "currentPlan": "Mevcut plan: {plan}",
     "recentActivity": "Son Hareketler",
     "viewAll": "Tümünü Gör",

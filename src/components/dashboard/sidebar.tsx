@@ -33,6 +33,12 @@ const routes = [
     color: 'text-pink-700',
   },
   {
+    label: 'tasks',
+    icon: FileText,
+    href: '/dashboard/tasks',
+    color: 'text-teal-600',
+  },
+  {
     label: 'reports',
     icon: BarChart,
     href: '/dashboard/reports',
