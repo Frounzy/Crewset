@@ -53,7 +53,7 @@ import { TasksClient } from './tasks-client'
     .single()
   meProfile = myProf || { id: user.id, email: user.email }
   return <TasksClient tasks={tasks || []} currentUserId={user.id} members={members} contracts={contracts} />
-  return <TasksClient tasks={tasks || []} currentUserId={user.id} members={members} contracts={contracts} currentUser={meProfile} />
+}
  
  
  

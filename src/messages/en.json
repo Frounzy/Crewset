@@ -73,8 +73,12 @@
       "roadmap": "Roadmap",
       "privacy": "Privacy Policy",
       "terms": "Terms of Service",
-      "refund": "Refund Policy"
-    }
+      "refund": "Refund Policy",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn",
+      "contact": "Contact"
+    },
+    "rights": "All rights reserved."
   },
   "Hero": {
     "badge": "Made for freelancers",
@@ -204,6 +208,16 @@
       "feature3": "Share a single public link",
       "cta": "Create your profile",
       "subNote": "You can hide items any time."
+    },
+    "ApprovalLink": {
+      "title": "Client-Specific Approval Link",
+      "description": "Get contract approvals quickly, clearly, and with control.",
+      "items": {
+        "link": { "title": "Link", "desc": "A unique link for each client" },
+        "approve": { "title": "Approval", "desc": "Clear one-step approval" },
+        "record": { "title": "Record", "desc": "Approval time and steps are stored" }
+      },
+      "footnote": "Approval records are kept organized to prevent confusion later."
     }
   },
   "MobileApp": {
@@ -278,10 +292,26 @@
   },
   "Auth": {
     "login": {
-      "title": "Log in"
+      "title": "Log in",
+      "description": "Access your Crewset account.",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "submit": "Log in",
+      "submitting": "Signing in...",
+      "orContinueWith": "Or continue with",
+      "magicLink": "Send Magic Link",
+      "magicLinkSent": "Magic link sent to your email.",
+      "google": "Continue with Google"
     },
     "register": {
-      "title": "Create account"
+      "title": "Create account",
+      "description": "Start managing clients and contracts.",
+      "submit": "Create account",
+      "submitting": "Creating...",
+      "orContinueWith": "Or continue with",
+      "google": "Continue with Google",
+      "alreadyHaveAccount": "Already have an account?",
+      "login": "Log in"
     },
     "errors": {
       "generic": "Something went wrong"
