@@ -3,7 +3,10 @@
 import { createClient } from '@/lib/supabase/server'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
-import { getAuthenticatedUser } from '@/lib/security/auth'
+import { getAuthenticatedUser, requirePlan, assertOwnership } from '@/lib/security/auth'
+import { checkRateLimit } from '@/lib/security/rate-limit'
+import crypto from 'crypto'
+import { cookies } from 'next/headers'
 
 const clientSchema = z.object({
   name: z.string().min(1, 'Name is required').max(100, 'Name too long'),
@@ -123,4 +126,44 @@ export async function deleteClientAction(id: string) {
 
   revalidatePath('/dashboard/clients')
   return { success: 'Client deleted successfully' }
+}
+
+export async function createFeedbackLinkAction(clientId: string) {
+  const supabase = await createClient()
+  const user = await requirePlan('pro')
+
+  try {
+    await assertOwnership('clients', clientId, user.id)
+  } catch {
+    return { error: 'Unauthorized' }
+  }
+
+  const { success } = await checkRateLimit(`feedback_link:${user.id}`, 10, 3600)
+  if (!success) {
+    return { error: 'Rate limit exceeded. Please try later.' }
+  }
+
+  const token = crypto.randomBytes(24).toString('hex')
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString()
+
+  const { data, error } = await supabase
+    .from('client_feedback_requests')
+    .insert({
+      user_id: user.id,
+      client_id: clientId,
+      token,
+      expires_at: expiresAt,
+    })
+    .select('id, token')
+    .single()
+
+  if (error) {
+    return { error: error.message }
+  }
+
+  const cookieStore = await cookies()
+  const rawLocale = cookieStore.get('NEXT_LOCALE')?.value || 'tr'
+  const locale = ['en', 'tr'].includes(rawLocale) ? rawLocale : 'tr'
+  const url = `/${locale}/feedback/${data.token}`
+  return { success: 'Feedback link created', url }
 }

@@ -19,7 +19,17 @@ export default async function DashboardPage() {
   const t = await getTranslations('Dashboard')
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  
+
+  type ContractRow = {
+    id: string
+    name: string
+    status: string
+    end_date: string
+    value_amount: number
+    value_period: 'monthly' | 'yearly'
+    client?: { name: string | null; email: string | null }
+  }
+
   const { data: contracts, error } = await supabase
     .from('contracts')
     .select('*, client:clients(name, email)')
@@ -38,31 +48,32 @@ export default async function DashboardPage() {
       console.error('Error details:', error)
   }
 
-  const activeContracts = contracts?.filter(c => c.status === 'active') || []
+  const typedContracts: ContractRow[] = (contracts || []) as unknown as ContractRow[]
+  const activeContracts: ContractRow[] = typedContracts.filter((c: ContractRow) => c.status === 'active')
   
-  const totalRevenue = activeContracts.reduce((acc, curr) => {
-      const value = Number(curr.value_amount) || 0
-      return acc + (curr.value_period === 'monthly' ? value * 12 : value)
+  const totalRevenue = activeContracts.reduce((acc: number, curr: ContractRow) => {
+    const value = Number(curr.value_amount) || 0
+    return acc + (curr.value_period === 'monthly' ? value * 12 : value)
   }, 0)
 
   const today = new Date()
   const thirtyDaysFromNow = addDays(today, 30)
 
-  const revenueAtRisk = activeContracts.reduce((acc, curr) => {
-      const endDate = parseISO(curr.end_date)
-      if (isAfter(endDate, today) && isBefore(endDate, thirtyDaysFromNow)) {
-           const value = Number(curr.value_amount) || 0
-           return acc + (curr.value_period === 'monthly' ? value * 12 : value)
-      }
-      return acc
+  const revenueAtRisk = activeContracts.reduce((acc: number, curr: ContractRow) => {
+    const endDate = parseISO(curr.end_date)
+    if (isAfter(endDate, today) && isBefore(endDate, thirtyDaysFromNow)) {
+      const value = Number(curr.value_amount) || 0
+      return acc + (curr.value_period === 'monthly' ? value * 12 : value)
+    }
+    return acc
   }, 0)
   
-  const expiringCount = activeContracts.filter(curr => {
-       const endDate = parseISO(curr.end_date)
-       return isAfter(endDate, today) && isBefore(endDate, thirtyDaysFromNow)
+  const expiringCount = activeContracts.filter((curr: ContractRow) => {
+    const endDate = parseISO(curr.end_date)
+    return isAfter(endDate, today) && isBefore(endDate, thirtyDaysFromNow)
   }).length
 
-  const recentContracts = contracts?.slice(0, 5) || []
+  const recentContracts: ContractRow[] = typedContracts.slice(0, 5)
 
   const formatCurrency = (amount: number) => {
       return new Intl.NumberFormat('en-US', {
@@ -178,7 +189,7 @@ export default async function DashboardPage() {
                 {recentContracts.length === 0 && (
                     <div className="text-sm text-muted-foreground">No contracts found.</div>
                 )}
-                {recentContracts.map((contract) => (
+                {recentContracts.map((contract: ContractRow) => (
                     <div className="flex items-center" key={contract.id}>
                         <div className="ml-4 space-y-1">
                             <p className="text-sm font-medium leading-none">{contract.name}</p>

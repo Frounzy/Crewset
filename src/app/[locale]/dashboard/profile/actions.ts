@@ -240,3 +240,27 @@ export async function deletePortfolioItem(itemId: string) {
   revalidatePath('/dashboard/profile')
   return { success: true }
 }
+
+export async function updateFeedbackVisibility(feedbackId: string, isPublic: boolean) {
+  try {
+    await requirePlan(['pro', 'agency'])
+  } catch (e) {
+    return { error: 'Public feedback is available on Pro plan only.' }
+  }
+
+  const user = await getAuthenticatedUser()
+  const supabase = await createClient()
+
+  const { error } = await supabase
+    .from('client_feedbacks')
+    .update({ published: isPublic })
+    .eq('id', feedbackId)
+    .eq('user_id', user.id)
+
+  if (error) {
+    return { error: error.message }
+  }
+
+  revalidatePath('/dashboard/profile')
+  return { success: true }
+}

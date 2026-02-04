@@ -328,6 +328,7 @@
     "editClient": "Müşteriyi Düzenle",
     "addDescription": "Sözleşmelerini yönetmek için yeni bir müşteri ekleyin.",
     "editDescription": "Müşteri profilinde değişiklik yapın.",
+    "feedbackLinkDescription": "Müşterinizden geri bildirim toplamak için tek kullanımlık, kişiye özel bir bağlantı oluşturun.",
     "form": {
       "name": "İsim",
       "email": "E-posta",
@@ -335,6 +336,12 @@
       "company": "Şirket",
       "notes": "Notlar",
       "save": "Değişiklikleri kaydet"
+    },
+    "columns": {
+      "name": "İsim",
+      "company": "Şirket",
+      "email": "E-posta",
+      "phone": "Telefon"
     }
   },
   "Contracts": {
@@ -444,7 +451,8 @@
     "title": "Profil ve Portföy",
     "tabs": {
       "general": "Genel Bilgiler",
-      "portfolio": "Portföy"
+      "portfolio": "Portföy",
+      "feedback": "Geri Bildirim"
     },
     "visibility": {
       "title": "Herkese Açık Görünürlük",
@@ -479,6 +487,12 @@
       "confirmDelete": "Bu projeyi silmek istediğinize emin misiniz?",
       "empty": "Henüz proje eklenmemiş."
     },
+    "feedback": {
+      "description": "Herkese açık profilinizde hangi müşteri geri bildirimlerinin görüneceğini yönetin.",
+      "madePublic": "Geri bildirim herkese açıldı.",
+      "madePrivate": "Geri bildirim herkese kapatıldı.",
+      "empty": "Henüz geri bildirim yok."
+    },
     "errors": {
       "usernameRequired": "Profilinizi yayınlamak için bir kullanıcı adı belirlemelisiniz.",
       "customUsernamePro": "Özel kullanıcı adları sadece Pro planda mevcuttur.",
@@ -486,5 +500,13 @@
       "projectAdded": "Proje portföye eklendi.",
       "projectDeleted": "Proje silindi."
     }
+  },
+  "PublicProfile": {
+    "contactMe": "İletişime Geç",
+    "selectedWork": "Seçili Çalışmalar",
+    "noPortfolio": "Henüz portföy öğesi yok.",
+    "viewProject": "Projeyi Görüntüle",
+    "publicFeedbackTitle": "Müşteri Geri Bildirimleri",
+    "noPublicFeedback": "Henüz herkese açık geri bildirim yok."
   }
 }

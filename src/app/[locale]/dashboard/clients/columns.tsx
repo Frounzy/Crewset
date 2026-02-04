@@ -14,9 +14,8 @@ import {
 import { ClientDialog } from './client-dialog'
 import { useState } from 'react'
 import { deleteClientAction } from './actions'
+import { FeedbackLinkDialog } from './feedback-link-dialog'
 
-// This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
 export type Client = {
   id: string
   name: string
@@ -28,7 +27,7 @@ export type Client = {
   contracts_count?: number
 }
 
-export const columns: ColumnDef<Client>[] = [
+export const getColumns = (t: any, subscriptionPlan?: string): ColumnDef<Client>[] => [
   {
     accessorKey: 'name',
     header: ({ column }) => {
@@ -37,7 +36,7 @@ export const columns: ColumnDef<Client>[] = [
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
           >
-            Name
+            {t ? t('columns.name') || 'Name' : 'Name'}
             <ArrowUpDown className="ml-2 h-4 w-4" />
           </Button>
         )
@@ -45,15 +44,15 @@ export const columns: ColumnDef<Client>[] = [
   },
   {
     accessorKey: 'company',
-    header: 'Company',
+    header: t ? t('columns.company') || 'Company' : 'Company',
   },
   {
     accessorKey: 'email',
-    header: 'Email',
+    header: t ? t('columns.email') || 'Email' : 'Email',
   },
   {
     accessorKey: 'phone',
-    header: 'Phone',
+    header: t ? t('columns.phone') || 'Phone' : 'Phone',
   },
   {
     accessorKey: 'contracts_count',
@@ -63,13 +62,17 @@ export const columns: ColumnDef<Client>[] = [
     id: 'actions',
     cell: ({ row }) => {
       const client = row.original
-      // eslint-disable-next-line react-hooks/rules-of-hooks
       const [showEditDialog, setShowEditDialog] = useState(false)
+      const [showFeedbackDialog, setShowFeedbackDialog] = useState(false)
 
       const handleDelete = async () => {
           if (confirm('Are you sure you want to delete this client?')) {
               await deleteClientAction(client.id)
           }
+      }
+
+      const handleFeedback = async () => {
+          setShowFeedbackDialog(true)
       }
 
       return (
@@ -78,7 +81,20 @@ export const columns: ColumnDef<Client>[] = [
                 client={client} 
                 open={showEditDialog} 
                 onOpenChange={setShowEditDialog} 
+                trigger={null}
             />
+            {subscriptionPlan === 'free' ? (
+              <Button disabled className="mr-2">
+                Feedback İste (Pro)
+              </Button>
+            ) : (
+              <Button 
+                className="mr-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500"
+                onClick={handleFeedback}
+              >
+                Feedback İste
+              </Button>
+            )}
             <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
@@ -96,6 +112,7 @@ export const columns: ColumnDef<Client>[] = [
                 <DropdownMenuItem onClick={handleDelete} className="text-red-600">Delete</DropdownMenuItem>
             </DropdownMenuContent>
             </DropdownMenu>
+            <FeedbackLinkDialog clientId={client.id} open={showFeedbackDialog} onOpenChange={setShowFeedbackDialog} />
         </>
       )
     },

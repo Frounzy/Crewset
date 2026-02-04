@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 }
 import { createClient } from '@/lib/supabase/server'
-import { ClientsClient } from './clients-client'
+import { ClientsRoot } from './clients-root'
 
 export default async function ClientsPage() {
   const supabase = await createClient()
@@ -50,7 +50,7 @@ export default async function ClientsPage() {
   }))
 
   return (
-    <ClientsClient 
+    <ClientsRoot 
       clients={clientsWithCounts} 
       subscriptionPlan={subscriptionPlan}
     />

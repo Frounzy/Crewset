@@ -1,7 +1,7 @@
 'use client'
 
 import { DataTable } from './data-table'
-import { columns, Client } from './columns'
+import { getColumns, Client } from './columns'
 import { ClientDialog } from './client-dialog'
 import { useTranslations } from 'next-intl'
 
@@ -12,6 +12,7 @@ interface ClientsClientProps {
 
 export function ClientsClient({ clients, subscriptionPlan }: ClientsClientProps) {
   const t = useTranslations('Clients')
+  const columns = getColumns(t, subscriptionPlan)
 
   return (
     <div className="flex-1 space-y-4">

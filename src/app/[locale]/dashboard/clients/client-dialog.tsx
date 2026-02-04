@@ -106,21 +106,23 @@ export function ClientDialog({ client, trigger, open, onOpenChange, subscription
 
   return (
     <Dialog open={open ?? dialogOpen} onOpenChange={handleOpenChange}>
-      <DialogTrigger asChild>
-        {trigger || (
-          <Button disabled={limitReached}>
-            {isEditing ? (
-              <>
-                <Pencil className="mr-2 h-4 w-4" /> {t('editClient')}
-              </>
-            ) : (
-              <>
-                <Plus className="mr-2 h-4 w-4" /> {t('addClient')}
-              </>
-            )}
-          </Button>
-        )}
-      </DialogTrigger>
+      {!(open !== undefined || onOpenChange !== undefined || trigger === null) && (
+        <DialogTrigger asChild>
+          {trigger || (
+            <Button disabled={limitReached}>
+              {isEditing ? (
+                <>
+                  <Pencil className="mr-2 h-4 w-4" /> {t('editClient')}
+                </>
+              ) : (
+                <>
+                  <Plus className="mr-2 h-4 w-4" /> {t('addClient')}
+                </>
+              )}
+            </Button>
+          )}
+        </DialogTrigger>
+      )}
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>{isEditing ? t('editClient') : t('addClient')}</DialogTitle>

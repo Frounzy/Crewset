@@ -26,6 +26,12 @@ export default async function ProfilePage() {
     .order('sort_order', { ascending: true })
     .order('created_at', { ascending: false })
   
+  const { data: feedbacks } = await supabase
+    .from('client_feedbacks')
+    .select('id, rating, comment, published, created_at, client:clients(name, company)')
+    .eq('user_id', user.id)
+    .order('created_at', { ascending: false })
+  
   // Create a default profile object if none exists
   const safeProfile = profile || {
     id: user.id,
@@ -45,6 +51,7 @@ export default async function ProfilePage() {
         user={user} 
         profile={safeProfile} 
         portfolio={portfolio || []} 
+        feedbacks={(feedbacks || []).map((f: any) => ({ ...f, is_public: !!f.published }))}
       />
     </div>
   )

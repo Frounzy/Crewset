@@ -8,12 +8,12 @@ import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
 import { Switch } from '@/components/ui/switch'
 import { useToast } from '@/hooks/use-toast'
-import { updateProfile, togglePublicStatus, addPortfolioItem, deletePortfolioItem, uploadAvatar } from './actions'
+import { updateProfile, togglePublicStatus, addPortfolioItem, deletePortfolioItem, uploadAvatar, updateFeedbackVisibility } from './actions'
 import { Loader2, Plus, Trash, Globe, Copy, Check, ExternalLink, Camera } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter } from '@/components/ui/dialog'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useTranslations } from 'next-intl'
+import { useTranslations, useLocale } from 'next-intl'
 import { createClient } from '@/lib/supabase/client'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
@@ -21,12 +21,21 @@ interface ProfileClientProps {
   user: any
   profile: any
   portfolio: any[]
+  feedbacks?: { 
+    id: string; 
+    rating: number; 
+    comment: string | null; 
+    is_public: boolean; 
+    created_at: string;
+    client?: { name: string; company: string | null }
+  }[]
 }
 
-export function ProfileClient({ user, profile, portfolio }: ProfileClientProps) {
+export function ProfileClient({ user, profile, portfolio, feedbacks = [] }: ProfileClientProps) {
   const t = useTranslations('Profile')
   const { toast } = useToast()
-  const [activeTab, setActiveTab] = useState<'general' | 'portfolio'>('general')
+  const locale = useLocale()
+  const [activeTab, setActiveTab] = useState<'general' | 'portfolio' | 'feedback'>('general')
   const [loading, setLoading] = useState(false)
   const [isPublic, setIsPublic] = useState(profile?.is_public || false)
   const [addDialogOpen, setAddDialogOpen] = useState(false)
@@ -48,7 +57,7 @@ export function ProfileClient({ user, profile, portfolio }: ProfileClientProps) 
 
   // Determine base URL (in production this should be env var)
   const origin = typeof window !== 'undefined' ? window.location.origin : ''
-  const publicUrl = profile?.username ? `${origin}/${profile.username}` : ''
+  const publicUrl = profile?.username ? `${origin}/${locale}/${profile.username}` : ''
 
   const handleAvatarUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     try {
@@ -179,7 +188,7 @@ export function ProfileClient({ user, profile, portfolio }: ProfileClientProps) 
                       <Button size="icon" variant="outline" onClick={handleCopy}>
                         {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                       </Button>
-                      <Link href={`/${profile.username}`} target="_blank">
+                      <Link href={`/${locale}/${profile.username}`} target="_blank">
                         <Button size="icon" variant="outline">
                           <ExternalLink className="h-4 w-4" />
                         </Button>
@@ -212,6 +221,16 @@ export function ProfileClient({ user, profile, portfolio }: ProfileClientProps) 
           }`}
         >
           {t('tabs.portfolio')} ({portfolio.length})
+        </button>
+        <button
+          onClick={() => setActiveTab('feedback')}
+          className={`px-4 py-2 text-sm font-medium transition-colors border-b-2 ${
+            activeTab === 'feedback' 
+              ? 'border-primary text-primary' 
+              : 'border-transparent text-muted-foreground hover:text-foreground'
+          }`}
+        >
+          {t('tabs.feedback')} ({feedbacks.length})
         </button>
       </div>
 
@@ -380,6 +399,50 @@ export function ProfileClient({ user, profile, portfolio }: ProfileClientProps) 
             )}
           </div>
         </div>
+      )}
+
+      {activeTab === 'feedback' && (
+        <Card>
+          <CardHeader>
+            <CardTitle>{t('tabs.feedback')}</CardTitle>
+            <CardDescription>{t('feedback.description')}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {feedbacks.map((fb) => (
+              <div key={fb.id} className="flex items-start justify-between border rounded-md p-3">
+                <div className="space-y-1">
+                  <div className="text-sm font-medium">⭐ {fb.rating} / 5</div>
+                  {fb.comment && <div className="text-sm text-muted-foreground">{fb.comment}</div>}
+                  <div className="text-xs text-muted-foreground">{new Date(fb.created_at).toLocaleString()}</div>
+                  {fb.client?.name && (
+                    <div className="text-xs text-muted-foreground">
+                      {fb.client.name}{fb.client.company ? ` • ${fb.client.company}` : ''}
+                    </div>
+                  )}
+                </div>
+                <div className="flex items-center gap-2">
+                  <Switch
+                    checked={fb.is_public}
+                    onCheckedChange={async (checked) => {
+                      const result = await updateFeedbackVisibility(fb.id, checked)
+                      if (result.error) {
+                        toast({ title: 'Error', description: result.error, variant: 'destructive' })
+                      } else {
+                        toast({ title: 'Success', description: checked ? t('feedback.madePublic') : t('feedback.madePrivate') })
+                      }
+                    }}
+                    disabled={user.plan === 'free'}
+                  />
+                </div>
+              </div>
+            ))}
+            {feedbacks.length === 0 && (
+              <div className="text-center py-12 text-muted-foreground border-2 border-dashed rounded-lg">
+                {t('feedback.empty')}
+              </div>
+            )}
+          </CardContent>
+        </Card>
       )}
     </div>
   )

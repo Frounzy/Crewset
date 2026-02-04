@@ -15,6 +15,7 @@ import {
   Dribbble,
   Briefcase
 } from 'lucide-react'
+import { getTranslations } from 'next-intl/server'
 
 export async function generateMetadata({ params }: { params: { username: string, locale: string } }): Promise<Metadata> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://crewset.app'
@@ -43,6 +44,7 @@ interface Props {
 export default async function PublicProfilePage({ params }: Props) {
   const { username } = await params
   const supabase = await createClient()
+  const t = await getTranslations()
 
   // Fetch profile
   const { data: profile } = await supabase
@@ -61,6 +63,13 @@ export default async function PublicProfilePage({ params }: Props) {
     .select('*')
     .eq('user_id', profile.id)
     .order('sort_order', { ascending: true })
+    .order('created_at', { ascending: false })
+  
+  const { data: publicFeedbacks } = await supabase
+    .from('client_feedbacks')
+    .select('id, rating, comment, created_at, client:clients(name, company)')
+    .eq('user_id', profile.id)
+    .eq('published', true)
     .order('created_at', { ascending: false })
 
   const socialLinks = (profile.social_links as Record<string, string>) || {}
@@ -125,7 +134,7 @@ export default async function PublicProfilePage({ params }: Props) {
              {profile.email && (
                 <Link href={`mailto:${profile.email}`}>
                     <Button className="rounded-full px-8 shadow-[0_0_20px_-5px_hsl(var(--primary)/0.5)]">
-                        <Mail className="mr-2 h-4 w-4" /> Contact Me
+                        <Mail className="mr-2 h-4 w-4" /> {t('PublicProfile.contactMe')}
                     </Button>
                 </Link>
              )}
@@ -137,12 +146,12 @@ export default async function PublicProfilePage({ params }: Props) {
       <div className="max-w-5xl mx-auto px-4 py-16">
         <h2 className="text-2xl font-semibold mb-8 flex items-center gap-2">
             <Briefcase className="h-5 w-5 text-primary" />
-            Selected Work
+            {t('PublicProfile.selectedWork')}
         </h2>
         
         {!portfolio || portfolio.length === 0 ? (
             <div className="text-center py-20 text-muted-foreground bg-card/20 rounded-xl border border-dashed">
-                <p>No portfolio items yet.</p>
+                <p>{t('PublicProfile.noPortfolio')}</p>
             </div>
         ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -169,13 +178,38 @@ export default async function PublicProfilePage({ params }: Props) {
                     )}
                     {item.link && (
                         <Link href={item.link} target="_blank" className="inline-flex items-center text-xs font-medium text-primary hover:underline">
-                            View Project →
+                            {t('PublicProfile.viewProject')} →
                         </Link>
                     )}
                 </CardContent>
                 </Card>
             ))}
             </div>
+        )}
+      </div>
+      
+      {/* Public Feedbacks */}
+      <div className="max-w-5xl mx-auto px-4 pb-8">
+        <h2 className="text-2xl font-semibold mb-6">{t('PublicProfile.publicFeedbackTitle')}</h2>
+        {!publicFeedbacks || publicFeedbacks.length === 0 ? (
+          <div className="text-center py-12 text-muted-foreground bg-card/20 rounded-xl border border-dashed">
+            <p>{t('PublicProfile.noPublicFeedback')}</p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {publicFeedbacks.map((fb) => (
+              <div key={fb.id} className="border rounded-lg p-4 bg-card/40">
+                <div className="text-sm font-medium">⭐ {fb.rating} / 5</div>
+                {fb.comment && <p className="text-sm text-muted-foreground mt-1">{fb.comment}</p>}
+                <div className="text-xs text-muted-foreground mt-2">{new Date(fb.created_at).toLocaleDateString()}</div>
+                {fb.client?.name && (
+                  <div className="text-xs text-muted-foreground mt-1">
+                    {fb.client.name}{fb.client.company ? ` • ${fb.client.company}` : ''}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
         )}
       </div>
       
