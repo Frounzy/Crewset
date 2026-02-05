@@ -108,6 +108,28 @@ export function TasksClient({ tasks, currentUserId, members = [], contracts = []
         </div>
        </div>
  
+      {items.length === 0 && (
+        <div className="grid gap-6">
+          <div className="border-2 border-dashed rounded-lg p-10 text-center">
+            <h3 className="text-xl font-semibold mb-2">Görevlerle işlerini zamanında tamamla</h3>
+            <p className="text-muted-foreground mb-6">
+              Sözleşmelere bağlı görevler oluşturarak teslim tarihlerini ve ekip işlerini kontrol altında tut.
+            </p>
+            <div className="flex items-center justify-center mb-3">
+              <TaskDialog
+                members={members}
+                contracts={contracts}
+                onCreated={(t) => setItems((prev) => [t as Task, ...prev])}
+                triggerLabel="İlk Görevi Oluştur"
+              />
+            </div>
+            <div className="text-xs text-muted-foreground">
+              Görevler ekip üyelerine atanabilir.
+            </div>
+          </div>
+        </div>
+      )}
+
        <div className="grid gap-4 md:grid-cols-2">
          <Card>
            <CardHeader>

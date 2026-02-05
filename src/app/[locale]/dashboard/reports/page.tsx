@@ -28,8 +28,26 @@ export default async function ReportsPage() {
       <p className="text-muted-foreground">
         {t('description')}
       </p>
-      
-      <ReportsClient contracts={contracts || []} />
+      {!(contracts || []).some((c: any) => c.status === 'active') ? (
+        <div className="grid gap-6">
+          <div className="border-2 border-dashed rounded-lg p-10 text-center">
+            <h3 className="text-xl font-semibold mb-2">Raporları görmek için bir adım kaldı</h3>
+            <p className="text-muted-foreground mb-6">
+              En az bir aktif sözleşme eklediğinde gelir dağılımını ve sözleşme performansını burada görebilirsin.
+            </p>
+            <div className="flex items-center justify-center mb-3">
+              <a href="/dashboard/contracts" className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90">
+                Sözleşme Ekle
+              </a>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              Raporlar otomatik olarak güncellenir.
+            </div>
+          </div>
+        </div>
+      ) : (
+        <ReportsClient contracts={contracts || []} />
+      )}
     </div>
   )
 }

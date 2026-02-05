@@ -45,7 +45,7 @@
    due_date: z.date(),
  })
  
- export function TaskDialog({ members, contracts, onCreated }: { members: any[]; contracts: any[]; onCreated?: (task: any) => void }) {
+export function TaskDialog({ members, contracts, onCreated, triggerLabel }: { members: any[]; contracts: any[]; onCreated?: (task: any) => void; triggerLabel?: string }) {
    const [isPending, startTransition] = useTransition()
    const [dialogOpen, setDialogOpen] = useState(false)
    const { toast } = useToast()
@@ -97,7 +97,7 @@
      <Dialog open={dialogOpen} onOpenChange={handleOpenChange}>
        <DialogTrigger asChild>
          <Button>
-           <Plus className="mr-2 h-4 w-4" /> Görev Oluştur
+          <Plus className="mr-2 h-4 w-4" /> {triggerLabel || 'Görev Oluştur'}
          </Button>
        </DialogTrigger>
        <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">

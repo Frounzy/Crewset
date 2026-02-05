@@ -174,6 +174,34 @@ export function BillingClient({ subscription, profile }: BillingClientProps) {
             </Button>
         )}
       </div>
+      {currentPlan === 'free' && (
+        <div className="border-2 border-dashed rounded-lg p-6">
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-4 sm:gap-6">
+            <div className="flex-1">
+              <h4 className="text-lg font-semibold mb-1">Daha fazla kontrol için planını yükseltebilirsin</h4>
+              <p className="text-sm text-muted-foreground">
+                Pro plan ile sınırsız sözleşme, gelir risk panosu ve gelişmiş raporlara erişim sağlarsın.
+              </p>
+              <div className="text-xs text-muted-foreground mt-3">
+                Kredi kartı bilgileri güvende · İstediğin zaman iptal edebilirsin
+              </div>
+            </div>
+            <div className="w-full sm:w-auto">
+              <Button
+                className="w-full"
+                onClick={() => {
+                  const pro = PLANS.find((p) => p.slug === 'pro')
+                  if (pro?.priceId) onCheckout(pro.priceId)
+                }}
+                disabled={isLoading || !PLANS.find((p) => p.slug === 'pro')?.priceId}
+              >
+                {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                Pro Plana Yükselt
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="grid gap-6 lg:grid-cols-3">
         {PLANS.map((plan) => (

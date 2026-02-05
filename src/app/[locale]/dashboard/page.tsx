@@ -261,6 +261,24 @@ export default async function DashboardPage() {
       <div className="flex items-center justify-between space-y-2">
         <h2 className="text-3xl font-bold tracking-tight">{t('title')}</h2>
       </div>
+      {activeContracts.length === 0 && (
+        <div className="grid gap-6">
+          <div className="border-2 border-dashed rounded-lg p-10 text-center">
+            <h3 className="text-xl font-semibold mb-2">Henüz hiçbir verin yok — ama başlamak çok kolay.</h3>
+            <p className="text-muted-foreground mb-6">
+              İlk müşterini ve sözleşmeni eklediğinde Crewset, gelirini takip etmeye ve yaklaşan riskler için seni otomatik olarak uyarmaya başlar.
+            </p>
+            <div className="flex items-center justify-center mb-3">
+              <Button asChild>
+                <Link href="/dashboard/clients">İlk Müşterini Ekle</Link>
+              </Button>
+            </div>
+            <div className="text-xs text-muted-foreground">
+              Kurulum gerekmez · Ücretsiz başlayabilirsin · Dilediğin zaman düzenleyebilirsin
+            </div>
+          </div>
+        </div>
+      )}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
