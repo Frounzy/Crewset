@@ -5,6 +5,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { getAuthenticatedUser, requirePlan, assertOwnership } from '@/lib/security/auth'
+import { Buffer } from 'buffer'
 
 const createOrgSchema = z.object({
   name: z.string().min(2).max(50),
@@ -12,6 +13,10 @@ const createOrgSchema = z.object({
 
 const inviteMemberSchema = z.object({
   email: z.string().email(),
+})
+
+const uploadOrgLogoSchema = z.object({
+  organization_id: z.string().uuid(),
 })
 
 export async function createOrganization(formData: FormData) {
@@ -58,6 +63,82 @@ export async function createOrganization(formData: FormData) {
 
   revalidatePath('/', 'layout')
   return { success: true }
+}
+
+export async function uploadOrganizationLogo(formData: FormData) {
+  const adminSupabase = createAdminClient()
+  const user = await getAuthenticatedUser()
+
+  const organization_id = (formData.get('organization_id') as string) || ''
+  const file = formData.get('file') as File
+
+  const parsed = uploadOrgLogoSchema.safeParse({ organization_id })
+  if (!parsed.success) {
+    return { error: 'Geçersiz organizasyon' }
+  }
+  if (!file) {
+    return { error: 'Dosya bulunamadı' }
+  }
+  if (!file.type.startsWith('image/')) {
+    return { error: 'Yalnızca resim dosyaları desteklenir' }
+  }
+  if (file.size > 2 * 1024 * 1024) {
+    return { error: 'Dosya boyutu 2MB’den küçük olmalı' }
+  }
+
+  // Ensure user is owner of the organization
+  const { data: membership } = await adminSupabase
+    .from('organization_members')
+    .select('role')
+    .eq('organization_id', parsed.data.organization_id)
+    .eq('user_id', user.id)
+    .single()
+
+  if (!membership || membership.role !== 'owner') {
+    return { error: 'Yalnızca organizasyon sahibi logo yükleyebilir' }
+  }
+
+  const arrayBuffer = await file.arrayBuffer()
+  const buffer = Buffer.from(arrayBuffer)
+  const ext = file.name.split('.').pop() || 'png'
+  const fileName = `logo-${Date.now()}.${ext}`
+  const path = `${parsed.data.organization_id}/${fileName}`
+  const bucket = 'org-logos'
+
+  async function doUpload() {
+    return await adminSupabase.storage
+      .from(bucket)
+      .upload(path, buffer, { contentType: file.type, upsert: true })
+  }
+
+  let uploadError = null
+  let uploadRes = await doUpload()
+  if (uploadRes.error) {
+    uploadError = uploadRes.error
+    if ((uploadError.message || '').toLowerCase().includes('bucket not found')) {
+      await adminSupabase.storage.createBucket(bucket, { public: true })
+      uploadRes = await doUpload()
+    }
+  }
+  if (uploadRes.error) {
+    return { error: uploadRes.error.message }
+  }
+
+  const { data: { publicUrl } } = adminSupabase.storage.from(bucket).getPublicUrl(path)
+
+  const { error: updateErr } = await adminSupabase
+    .from('organizations')
+    .update({ logo_url: publicUrl })
+    .eq('id', parsed.data.organization_id)
+
+  if (updateErr) {
+    return { error: updateErr.message }
+  }
+
+  revalidatePath('/dashboard/team')
+  revalidatePath('/dashboard')
+  revalidatePath('/dashboard/tasks')
+  return { success: true, publicUrl }
 }
 
 export async function inviteMember(formData: FormData) {

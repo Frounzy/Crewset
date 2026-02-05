@@ -6,6 +6,16 @@
  import { getAuthenticatedUser } from '@/lib/security/auth'
 import { createAdminClient } from '@/lib/supabase/admin'
  
+ function sanitize(input?: string | null) {
+   if (!input) return input || null
+   return input
+     .replace(/</g, '&lt;')
+     .replace(/>/g, '&gt;')
+     .replace(/"/g, '&quot;')
+     .replace(/'/g, '&#39;')
+     .trim()
+ }
+ 
  const createSchema = z.object({
    title: z.string().min(1),
    description: z.string().optional(),
@@ -34,7 +44,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
  }
  
  export async function createTaskAction(formData: FormData) {
-   const supabase = await createClient()
+  const supabase = await createClient()
    const user = await getAuthenticatedUser()
    const orgId = await getOrganizationIdForUser(user.id)
    if (!orgId) return { error: 'Organizasyon bulunamadı' }
@@ -49,24 +59,25 @@ import { createAdminClient } from '@/lib/supabase/admin'
    const parsed = createSchema.safeParse(raw)
    if (!parsed.success) return { error: 'Geçersiz alanlar' }
  
-   const { error, data } = await supabase
+  const admin = createAdminClient()
+  const { error, data } = await admin
      .from('tasks')
-     .insert({
+    .insert({
        organization_id: orgId,
        user_id: user.id,
        contract_id: parsed.data.contract_id || null,
-       title: parsed.data.title,
-       description: parsed.data.description || null,
+       title: sanitize(parsed.data.title) || '',
+       description: sanitize(parsed.data.description) || null,
        assignee_id: parsed.data.assignee_id || null,
        due_date: parsed.data.due_date,
        status: 'open',
      })
-     .select()
+    .select('*, assignee:profiles!tasks_assignee_id_fkey(full_name, email), contract:contracts(name)')
      .single()
  
    if (error) return { error: error.message }
  
-   await supabase.from('task_activities').insert({
+  await admin.from('task_activities').insert({
      organization_id: orgId,
      task_id: data.id,
      actor_id: user.id,
@@ -76,16 +87,26 @@ import { createAdminClient } from '@/lib/supabase/admin'
  
    revalidatePath('/dashboard/tasks')
    revalidatePath('/dashboard')
-   return { success: true }
+  return { success: true, task: data }
  }
  
  export async function assignTaskAction(id: string, assigneeId: string) {
-   const supabase = await createClient()
+  const admin = createAdminClient()
    const user = await getAuthenticatedUser()
    const orgId = await getOrganizationIdForUser(user.id)
    if (!orgId) return { error: 'Organizasyon bulunamadı' }
  
-   const { error } = await supabase
+ // Ownership/org check
+ const { data: taskRow, error: fetchErr } = await admin
+   .from('tasks')
+   .select('organization_id')
+   .eq('id', id)
+   .single()
+ if (fetchErr || !taskRow || taskRow.organization_id !== orgId) {
+   return { error: 'Yetkisiz erişim' }
+ }
+ 
+  const { error } = await admin
      .from('tasks')
      .update({
        assignee_id: assigneeId,
@@ -94,7 +115,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
  
    if (error) return { error: error.message }
  
-   await supabase.from('task_activities').insert({
+  await admin.from('task_activities').insert({
      organization_id: orgId,
      task_id: id,
      actor_id: user.id,
@@ -108,14 +129,24 @@ import { createAdminClient } from '@/lib/supabase/admin'
  }
  
  export async function updateTaskStatusAction(id: string, status: 'open' | 'completed') {
-   const supabase = await createClient()
+  const admin = createAdminClient()
    const user = await getAuthenticatedUser()
    const orgId = await getOrganizationIdForUser(user.id)
    if (!orgId) return { error: 'Organizasyon bulunamadı' }
  
    if (!statusSchema.safeParse(status).success) return { error: 'Geçersiz durum' }
  
-   const { error } = await supabase
+ // Ownership/org check
+ const { data: taskRow, error: fetchErr } = await admin
+   .from('tasks')
+   .select('organization_id')
+   .eq('id', id)
+   .single()
+ if (fetchErr || !taskRow || taskRow.organization_id !== orgId) {
+   return { error: 'Yetkisiz erişim' }
+ }
+ 
+  const { error } = await admin
      .from('tasks')
      .update({ status })
      .eq('id', id)
@@ -123,7 +154,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
    if (error) return { error: error.message }
  
    if (status === 'completed') {
-     await supabase.from('task_activities').insert({
+    await admin.from('task_activities').insert({
        organization_id: orgId,
        task_id: id,
        actor_id: user.id,

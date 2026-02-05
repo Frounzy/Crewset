@@ -101,7 +101,8 @@ export default async function TeamPage() {
   const transformedOrg = organization ? {
     id: organization.id,
     name: organization.name,
-    role: currentMembership?.role || 'member'
+    role: currentMembership?.role || 'member',
+    logo_url: (organization as any)?.logo_url || null
   } : null
 
   const transformedMembers = members.map(member => ({

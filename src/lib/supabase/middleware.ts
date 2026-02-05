@@ -38,6 +38,8 @@ export async function updateSession(request: NextRequest, response: NextResponse
   const pathname = request.nextUrl.pathname
   const localePattern = /^\/(?:en|tr)/
   const pathWithoutLocale = pathname.replace(localePattern, '') || '/'
+  const localeMatch = pathname.match(localePattern)
+  const locale = localeMatch ? localeMatch[0] : '/en'
 
   // Protected routes logic
   // Public profile: /{username} should be publicly accessible
@@ -55,12 +57,8 @@ export async function updateSession(request: NextRequest, response: NextResponse
     pathWithoutLocale !== '/' &&
     !isPublicProfile
   ) {
-    // Determine locale to redirect to
-    const localeMatch = pathname.match(localePattern)
-    const locale = localeMatch ? localeMatch[0] : '/en'
-    
     const url = request.nextUrl.clone()
-    url.pathname = `${locale}/login`
+    url.pathname = `${locale}/404`
     return NextResponse.redirect(url)
   }
 
@@ -73,11 +71,41 @@ export async function updateSession(request: NextRequest, response: NextResponse
   ) {
       const url = request.nextUrl.clone()
       url.pathname = '/dashboard' // or locale prefixed dashboard
-      // We should probably keep locale
-      const localeMatch = pathname.match(localePattern)
-      const locale = localeMatch ? localeMatch[0] : '/en'
       url.pathname = `${locale}/dashboard`
       return NextResponse.redirect(url)
+  }
+
+  // Admin/Debug/Test hardening in production
+  if (['/admin', '/debug', '/test'].some((p) => pathWithoutLocale.startsWith(p))) {
+    if (process.env.NODE_ENV === 'production') {
+      const ipHeader = request.headers.get('x-forwarded-for') || ''
+      const ip = (request.ip || ipHeader.split(',')[0] || '').trim()
+      const whitelist = (process.env.ADMIN_IP_WHITELIST || '')
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean)
+      if (!ip || !whitelist.includes(ip)) {
+        const url = request.nextUrl.clone()
+        url.pathname = `${locale}/`
+        return NextResponse.redirect(url)
+      }
+    }
+  }
+
+  // CSRF token (double-submit cookie) setup for non-GET requests
+  const method = request.method || 'GET'
+  const hasCsrf = request.cookies.get('csrf_token')
+  if (!hasCsrf) {
+    const token = (globalThis.crypto && 'randomUUID' in globalThis.crypto) 
+      ? globalThis.crypto.randomUUID() 
+      : `${Date.now()}-${Math.random().toString(36).slice(2)}`
+    supabaseResponse.cookies.set('csrf_token', token, {
+      path: '/',
+      httpOnly: false,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 2 * 60 * 60,
+    })
   }
 
   return supabaseResponse

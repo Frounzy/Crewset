@@ -1,13 +1,17 @@
 import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
+import { createAdminClient } from '@/lib/supabase/admin'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { DollarSign, Users, CreditCard, Activity, Lock, AlertTriangle } from "lucide-react"
 import { addDays, isAfter, isBefore, parseISO, differenceInCalendarDays } from 'date-fns'
 import { getTranslations } from 'next-intl/server'
-import Link from 'next/link'
+import { Link } from '@/navigation'
 import { Button } from '@/components/ui/button'
 import { OverviewClient } from './overview-client'
 import { ActivityFeedClient, ActivityEvent } from './activity-feed-client'
+import Image from 'next/image'
+import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
   title: 'Dashboard | Crewset',
@@ -21,6 +25,9 @@ export default async function DashboardPage() {
   const t = await getTranslations('Dashboard')
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  if (!user) {
+    notFound()
+  }
 
   type ContractRow = {
     id: string
@@ -160,27 +167,56 @@ export default async function DashboardPage() {
   }
   
   // Fetch tasks for dashboard widgets and task activities
+  const admin = createAdminClient()
+  const { data: memberRows } = await admin
+    .from('organization_members')
+    .select('organization_id')
+    .eq('user_id', user?.id || '')
+  const memberOrgIds = (memberRows || []).map((r: any) => r.organization_id)
   const { data: subOrg } = await supabase
     .from('subscriptions')
     .select('organization_id')
     .eq('user_id', user?.id || '')
     .single()
-  const orgId = subOrg?.organization_id
+  const fallbackOrg = subOrg?.organization_id || null
+  const orgIdsForFetch = memberOrgIds.length ? memberOrgIds : (fallbackOrg ? [fallbackOrg] : [])
   
   let tasks: any[] = []
   let taskActivities: any[] = []
-  if (orgId) {
-    const { data: t } = await supabase
+  let orgLogos: Record<string, string | null> = {}
+  if (orgIdsForFetch.length) {
+    const { data: t } = await admin
       .from('tasks')
-      .select('*, assignee:profiles(full_name, email), contract:contracts(name)')
-      .eq('organization_id', orgId)
+      .select('*, assignee:profiles!tasks_assignee_id_fkey(full_name, email), contract:contracts(name)')
+      .in('organization_id', orgIdsForFetch)
       .order('due_date', { ascending: true })
     tasks = t || []
+    const { data: orgs } = await admin
+      .from('organizations')
+      .select('id, logo_url')
+      .in('id', orgIdsForFetch)
+    ;(orgs || []).forEach((o: any) => {
+      orgLogos[o.id] = o.logo_url || null
+    })
     
-    const { data: ta } = await supabase
+    const { data: ta } = await admin
       .from('task_activities')
       .select('*')
-      .eq('organization_id', orgId)
+      .in('organization_id', orgIdsForFetch)
+      .order('created_at', { ascending: false })
+      .limit(10)
+    taskActivities = ta || []
+  } else {
+    const { data: t } = await admin
+      .from('tasks')
+      .select('*, assignee:profiles!tasks_assignee_id_fkey(full_name, email), contract:contracts(name)')
+      .eq('user_id', user?.id || '')
+      .order('due_date', { ascending: true })
+    tasks = t || []
+    const { data: ta } = await admin
+      .from('task_activities')
+      .select('*')
+      .eq('actor_id', user?.id || '')
       .order('created_at', { ascending: false })
       .limit(10)
     taskActivities = ta || []
@@ -305,30 +341,67 @@ export default async function DashboardPage() {
           </CardContent>
         </Card>
         <div className="col-span-3 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-medium">{t('recentActivity')}</h3>
+          </div>
+          <ActivityFeedClient events={activityEvents} />
           <div className="space-y-2">
             <h3 className="text-sm font-medium">Bana Atanan Görevler</h3>
             <div className="space-y-2">
-              {tasks.filter((t: any) => t.assignee_id === user?.id).slice(0,5).map((t: any) => (
-                <Link key={t.id} href={`/dashboard/tasks/${t.id}`} className="block">
-                  <div className="flex items-center gap-3 p-2 rounded-lg border hover:border-primary/40 transition-colors">
-                    <div className="ml-1 space-y-1">
-                      <p className="text-sm font-medium leading-none">{t.title}</p>
-                      <p className="text-xs text-muted-foreground">
-                        {t.contract?.name || 'Görev'} • {new Date(t.due_date).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+              {tasks
+                .filter((t: any) => t.assignee_id === user?.id)
+                .slice(0, 5)
+                .map((t: any) => {
+                  const due = new Date(t.due_date)
+                  const diff = differenceInCalendarDays(due, new Date())
+                  let label = ''
+                  let variant: any = 'outline'
+                  if (diff < 0) {
+                    label = 'GEÇTİ'
+                    variant = 'destructive'
+                  } else if (diff === 0) {
+                    label = 'BUGÜN'
+                    variant = 'secondary'
+                  } else if (diff === 1) {
+                    label = 'YARIN'
+                    variant = 'secondary'
+                  } else {
+                    label = `${diff} gün`
+                    variant = 'outline'
+                  }
+                  const logo = orgLogos[t.organization_id] || ''
+                  return (
+                    <Link key={t.id} href={`/dashboard/tasks/${t.id}`} className="block">
+                      <div className="group flex items-center justify-between gap-4 p-3 rounded-lg border hover:border-primary/40 hover:bg-primary/5 transition-colors">
+                        <div className="flex items-center gap-3">
+                          {logo ? (
+                            <div className="relative h-7 w-7 rounded-full overflow-hidden ring-1 ring-border">
+                              <Image src={logo} alt="Org" fill className="object-cover" />
+                            </div>
+                          ) : (
+                            <div className="flex size-7 items-center justify-center rounded-full bg-muted text-xs font-semibold text-muted-foreground">
+                              {(t.contract?.name || 'G').slice(0, 1).toUpperCase()}
+                            </div>
+                          )}
+                          <div className="ml-1 space-y-0.5">
+                            <p className="text-sm font-medium leading-none">{t.title}</p>
+                            <p className="text-xs text-muted-foreground">
+                              {t.contract?.name || 'Görev'} • {new Date(t.due_date).toLocaleDateString()}
+                            </p>
+                          </div>
+                        </div>
+                        <Badge variant={variant} className="shrink-0">
+                          {label}
+                        </Badge>
+                      </div>
+                    </Link>
+                  )
+                })}
               {tasks.filter((t: any) => t.assignee_id === user?.id).length === 0 && (
                 <div className="text-sm text-muted-foreground">Size atanmış görev yok.</div>
               )}
             </div>
           </div>
-          <div className="flex items-center justify-between">
-            <h3 className="text-sm font-medium">{t('recentActivity')}</h3>
-          </div>
-          <ActivityFeedClient events={activityEvents} />
         </div>
       </div>
     </div>

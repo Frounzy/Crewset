@@ -1,7 +1,7 @@
  'use client'
  
  import { useMemo } from 'react'
- import Link from 'next/link'
+ import { Link } from '@/navigation'
  import { Card, CardContent } from '@/components/ui/card'
  import { formatDistanceToNow } from 'date-fns'
  import { tr, enUS } from 'date-fns/locale'
@@ -44,7 +44,7 @@
      () =>
        [...events]
          .sort((a, b) => new Date(b.at).getTime() - new Date(a.at).getTime())
-         .slice(0, 10),
+        .slice(0, 5),
      [events]
    )
  
@@ -54,9 +54,9 @@
      )
    }
  
-   return (
-     <Card className="bg-background border-border">
-       <CardContent className="space-y-4 pt-6">
+  return (
+    <Card className="bg-background border-border">
+      <CardContent className="space-y-4 pt-6">
          {items.map((ev) => {
            const meta = typeMeta[ev.type]
            const timeAgo = formatDistanceToNow(new Date(ev.at), {
@@ -85,9 +85,9 @@
                </div>
              </Link>
            )
-         })}
-       </CardContent>
-     </Card>
+        })}
+      </CardContent>
+    </Card>
    )
  }
  

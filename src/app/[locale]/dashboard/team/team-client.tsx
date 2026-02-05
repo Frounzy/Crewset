@@ -8,12 +8,13 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
-import { createOrganization, inviteMember, leaveOrganization, removeMember } from './actions'
+import { createOrganization, inviteMember, leaveOrganization, removeMember, uploadOrganizationLogo } from './actions'
 import { useToast } from '@/hooks/use-toast'
 import { useState } from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
-import { Loader2, Plus, Trash2 } from 'lucide-react'
+import { Loader2, Plus, Trash2, Camera } from 'lucide-react'
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar'
 import { useRouter } from 'next/navigation'
 
 interface TeamClientProps {
@@ -21,6 +22,7 @@ interface TeamClientProps {
     id: string
     name: string
     role: string // 'owner' | 'member'
+    logo_url?: string | null
   } | null
   members: {
     id: string
@@ -48,6 +50,8 @@ export function TeamClient({ organization, members, currentUserId, subscriptionP
   const { toast } = useToast()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [uploadingLogo, setUploadingLogo] = useState(false)
+  const [orgLogoUrl, setOrgLogoUrl] = useState(organization?.logo_url || '')
 
   const createForm = useForm<z.infer<typeof createOrgSchema>>({
     resolver: zodResolver(createOrgSchema),
@@ -155,6 +159,29 @@ export function TeamClient({ organization, members, currentUserId, subscriptionP
     }
   }
 
+  async function handleLogoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    try {
+      setUploadingLogo(true)
+      const file = e.target.files?.[0]
+      if (!file || !organization?.id) return
+      const formData = new FormData()
+      formData.append('organization_id', organization.id)
+      formData.append('file', file)
+      const result = await uploadOrganizationLogo(formData)
+      if (result?.error) {
+        toast({ title: "Hata", description: result.error, variant: "destructive" })
+      } else {
+        setOrgLogoUrl(result.publicUrl!)
+        toast({ title: "Başarılı", description: "Logo yüklendi. Kaydetmeye gerek yok." })
+        router.refresh()
+      }
+    } catch (e: any) {
+      toast({ title: "Hata", description: e?.message || 'Logo yüklenemedi', variant: "destructive" })
+    } finally {
+      setUploadingLogo(false)
+    }
+  }
+
   if (!organization) {
     return (
       <div className="grid gap-6">
@@ -209,7 +236,30 @@ export function TeamClient({ organization, members, currentUserId, subscriptionP
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <div>
+            <div className="flex items-center gap-4">
+              <div className="relative group">
+                <Avatar className="h-14 w-14 border">
+                  <AvatarImage src={orgLogoUrl} className="object-cover" />
+                  <AvatarFallback className="text-sm">{(organization.name || 'O').slice(0,2).toUpperCase()}</AvatarFallback>
+                </Avatar>
+                {organization.role === 'owner' && (
+                  <label 
+                    htmlFor="org-logo-upload" 
+                    className="absolute -bottom-2 -right-2 p-2 bg-primary text-primary-foreground rounded-full cursor-pointer hover:bg-primary/90 transition-colors shadow-sm"
+                    title="Logo Yükle"
+                  >
+                    {uploadingLogo ? <Loader2 className="h-4 w-4 animate-spin" /> : <Camera className="h-4 w-4" />}
+                    <input 
+                      id="org-logo-upload"
+                      type="file" 
+                      accept="image/*" 
+                      className="hidden"
+                      onChange={handleLogoUpload}
+                      disabled={uploadingLogo}
+                    />
+                  </label>
+                )}
+              </div>
               <CardTitle>{t('currentOrg')}</CardTitle>
               <CardDescription>{organization.name}</CardDescription>
             </div>

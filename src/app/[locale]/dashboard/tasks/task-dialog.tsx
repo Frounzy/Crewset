@@ -35,6 +35,7 @@
  import { Loader2, Plus } from 'lucide-react'
  import { createTaskAction } from './actions'
  import { useToast } from '@/hooks/use-toast'
+ import { useRouter } from 'next/navigation'
  
  const formSchema = z.object({
    title: z.string().min(1),
@@ -44,10 +45,11 @@
    due_date: z.date(),
  })
  
- export function TaskDialog({ members, contracts }: { members: any[]; contracts: any[] }) {
+ export function TaskDialog({ members, contracts, onCreated }: { members: any[]; contracts: any[]; onCreated?: (task: any) => void }) {
    const [isPending, startTransition] = useTransition()
    const [dialogOpen, setDialogOpen] = useState(false)
    const { toast } = useToast()
+  const router = useRouter()
  
    const form = useForm<z.infer<typeof formSchema>>({
      resolver: zodResolver(formSchema) as any,
@@ -76,6 +78,10 @@
          toast({ title: 'Başarılı', description: 'Görev oluşturuldu' })
          setDialogOpen(false)
          form.reset()
+        router.refresh()
+        if ((res as any)?.task && onCreated) {
+          onCreated((res as any).task)
+        }
        }
      })
    }
