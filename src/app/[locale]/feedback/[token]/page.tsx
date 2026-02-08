@@ -6,19 +6,6 @@ import { Textarea } from '@/components/ui/textarea'
 import { useParams } from 'next/navigation'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '@/components/ui/card'
 import { Star, Loader2, CheckCircle2, AlertCircle } from 'lucide-react'
-import type { Metadata } from 'next'
-import { getTranslations } from 'next-intl/server'
-
-export async function generateMetadata({ params }: { params: { locale: string, token: string } }): Promise<Metadata> {
-  const locale = params?.locale || 'tr'
-  const t = await getTranslations('SEO.Feedback')
-  return {
-    title: t('title'),
-    description: t('description'),
-    alternates: { canonical: `/${locale}/feedback/${params?.token || ''}` },
-    robots: { index: false, follow: true },
-  }
-}
 
 export default function FeedbackPage() {
   const params = useParams()
