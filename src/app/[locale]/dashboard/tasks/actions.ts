@@ -164,6 +164,76 @@ import { createAdminClient } from '@/lib/supabase/admin'
  
    revalidatePath('/dashboard/tasks')
    revalidatePath('/dashboard')
+  revalidatePath(`/dashboard/tasks/${id}`)
    return { success: true }
  }
  
+export async function updateTaskProgressAction(id: string, progress: 'doing') {
+  const admin = createAdminClient()
+  const user = await getAuthenticatedUser()
+  const { data: taskRow, error: fetchErr } = await admin
+    .from('tasks')
+    .select('organization_id, user_id')
+    .eq('id', id)
+    .single()
+  if (fetchErr || !taskRow) return { error: 'Görev bulunamadı' }
+  if (taskRow.user_id !== user.id) {
+    const { data: membership } = await admin
+      .from('organization_members')
+      .select('id')
+      .eq('organization_id', taskRow.organization_id)
+      .eq('user_id', user.id)
+      .limit(1)
+    if (!membership || !membership.length) {
+      return { error: 'Yetkisiz erişim' }
+    }
+  }
+  await admin.from('task_activities').insert({
+    organization_id: taskRow.organization_id,
+    task_id: id,
+    actor_id: user.id,
+    action: 'task_progress_updated',
+    details: { progress },
+  })
+  revalidatePath('/dashboard/tasks')
+  revalidatePath('/dashboard')
+  revalidatePath(`/dashboard/tasks/${id}`)
+  return { success: true }
+}
+
+export async function addTaskNoteAction(formData: FormData) {
+  const admin = createAdminClient()
+  const user = await getAuthenticatedUser()
+  const taskId = (formData.get('task_id') as string) || ''
+  const noteRaw = (formData.get('note') as string) || ''
+  const note = sanitize(noteRaw || '')
+  if (!taskId || !note) return { error: 'Geçersiz alanlar' }
+  const { data: taskRow, error: fetchErr } = await admin
+    .from('tasks')
+    .select('organization_id, user_id')
+    .eq('id', taskId)
+    .single()
+  if (fetchErr || !taskRow) return { error: 'Görev bulunamadı' }
+  if (taskRow.user_id !== user.id) {
+    const { data: membership } = await admin
+      .from('organization_members')
+      .select('id')
+      .eq('organization_id', taskRow.organization_id)
+      .eq('user_id', user.id)
+      .limit(1)
+    if (!membership || !membership.length) {
+      return { error: 'Yetkisiz erişim' }
+    }
+  }
+  await admin.from('task_activities').insert({
+    organization_id: taskRow.organization_id,
+    task_id: taskId,
+    actor_id: user.id,
+    action: 'task_note_added',
+    details: { note },
+  })
+  revalidatePath('/dashboard/tasks')
+  revalidatePath('/dashboard')
+  revalidatePath(`/dashboard/tasks/${taskId}`)
+  return { success: true }
+}

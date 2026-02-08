@@ -509,5 +509,9 @@
     "viewProject": "Projeyi Görüntüle",
     "publicFeedbackTitle": "Müşteri Geri Bildirimleri",
     "noPublicFeedback": "Henüz herkese açık geri bildirim yok."
+  },
+  "Tasks": {
+    "title": "Görevler",
+    "back": "Görevlere Dön"
   }
 }

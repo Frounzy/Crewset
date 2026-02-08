@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 export const metadata: Metadata = {
-  title: 'Profile | Crewset',
+  title: 'Profile',
   robots: { index: false, follow: false },
 }
 import { createClient } from '@/lib/supabase/server'

@@ -7,7 +7,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://crewset.app'
   const locale = params?.locale || 'en'
   const canonicalPath = `/${locale}/terms`
-  const title = 'Kullanım Şartları | Crewset'
+  const title = 'Kullanım Şartları'
   const description = 'Crewset platformunun kullanım koşulları ve yasal şartlar.'
   return {
     title,

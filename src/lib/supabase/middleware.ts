@@ -79,7 +79,7 @@ export async function updateSession(request: NextRequest, response: NextResponse
   if (['/admin', '/debug', '/test'].some((p) => pathWithoutLocale.startsWith(p))) {
     if (process.env.NODE_ENV === 'production') {
       const ipHeader = request.headers.get('x-forwarded-for') || ''
-      const ip = (request.ip || ipHeader.split(',')[0] || '').trim()
+      const ip = (request.headers.get('x-real-ip') || ipHeader.split(',')[0] || '').trim()
       const whitelist = (process.env.ADMIN_IP_WHITELIST || '')
         .split(',')
         .map((s) => s.trim())

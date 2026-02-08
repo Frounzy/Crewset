@@ -7,7 +7,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://crewset.app'
   const locale = params?.locale || 'en'
   const canonicalPath = `/${locale}/privacy`
-  const title = 'Gizlilik Politikası | Crewset'
+  const title = 'Gizlilik Politikası'
   const description = 'Crewset gizlilik politikası ve kişisel verilerin işlenmesine ilişkin bilgiler.'
   return {
     title,

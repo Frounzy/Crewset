@@ -14,7 +14,7 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
 export const metadata: Metadata = {
-  title: 'Dashboard | Crewset',
+  title: 'Dashboard',
   robots: {
     index: false,
     follow: false,

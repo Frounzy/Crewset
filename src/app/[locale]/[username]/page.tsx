@@ -19,11 +19,12 @@ import { getTranslations } from 'next-intl/server'
 
 export async function generateMetadata({ params }: { params: { username: string, locale: string } }): Promise<Metadata> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://crewset.app'
-  const username = params?.username
+  const usernameParam = (params?.username || '').trim()
   const locale = params?.locale || 'en'
-  const canonicalPath = `/${locale}/${username}`
-  const title = `${username} • Profil | Crewset`
-  const description = `${username} tarafından paylaşılan portföy ve bilgiler. Crewset ile müşteriler ve sözleşmeler tek yerde.`
+  const canonicalPath = `/${locale}/${usernameParam}`
+  const displayName = usernameParam || 'Profil'
+  const title = displayName
+  const description = `${displayName} tarafından paylaşılan portföy ve bilgiler. Crewset ile müşteriler ve sözleşmeler tek yerde.`
   return {
     title,
     description,
@@ -32,6 +33,22 @@ export async function generateMetadata({ params }: { params: { username: string,
     openGraph: { type: 'profile', url: canonicalPath, title, description, siteName: 'Crewset', locale },
     twitter: { card: 'summary', title, description },
   }
+}
+
+type PortfolioItem = {
+  id: string
+  title: string
+  description?: string
+  image_url?: string
+  link?: string
+}
+
+type PublicFeedback = {
+  id: string
+  rating: number
+  comment?: string
+  created_at: string
+  client?: { name?: string; company?: string }
 }
 
 interface Props {
@@ -125,7 +142,7 @@ export default async function PublicProfilePage({ params }: Props) {
           </div>
 
           <div className="flex items-center gap-2">
-            {Object.entries(socialLinks).map(([key, value]) => (
+            {Object.entries(socialLinks).map(([key, value]: [string, string]) => (
                <SocialIcon key={key} type={key} url={value as string} />
             ))}
           </div>
@@ -155,7 +172,7 @@ export default async function PublicProfilePage({ params }: Props) {
             </div>
         ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {portfolio.map((item) => (
+            {portfolio.map((item: PortfolioItem) => (
                 <Card key={item.id} className="group overflow-hidden border-border/50 bg-card/40 backdrop-blur-sm hover:border-primary/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                 {item.image_url && (
                     <div className="relative h-48 w-full overflow-hidden">
@@ -197,7 +214,7 @@ export default async function PublicProfilePage({ params }: Props) {
           </div>
         ) : (
           <div className="space-y-4">
-            {publicFeedbacks.map((fb) => (
+            {publicFeedbacks.map((fb: PublicFeedback) => (
               <div key={fb.id} className="border rounded-lg p-4 bg-card/40">
                 <div className="text-sm font-medium">⭐ {fb.rating} / 5</div>
                 {fb.comment && <p className="text-sm text-muted-foreground mt-1">{fb.comment}</p>}

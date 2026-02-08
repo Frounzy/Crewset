@@ -181,61 +181,9 @@
       }
     }
   },
-  "Landing": {
-    "HowItWorks": {
-      "title": "How it works",
-      "subtitle": "Simple steps to get value",
-      "step1Title": "Add clients and contracts",
-      "step1Desc": "Create your list in minutes.",
-      "step2Title": "Set reminders",
-      "step2Desc": "Choose when to be notified.",
-      "step3Title": "Stay on top",
-      "step3Desc": "Get insights and renewals on time.",
-      "note": "You can start free and upgrade later."
-    },
-    "Trust": {
-      "title": "Built for reliability",
-      "card1": "Secure by design",
-      "card2": "Smart notifications",
-      "card3": "Safe payments",
-      "card4": "Fast performance"
-    },
-    "Portfolio": {
-      "title": "Showcase your work",
-      "description": "Create a public profile with portfolio and feedback.",
-      "feature1": "Highlight selected projects",
-      "feature2": "Collect client feedback",
-      "feature3": "Share a single public link",
-      "cta": "Create your profile",
-      "subNote": "You can hide items any time."
-    },
-    "ApprovalLink": {
-      "title": "Client-Specific Approval Link",
-      "description": "Get contract approvals quickly, clearly, and with control.",
-      "items": {
-        "link": { "title": "Link", "desc": "A unique link for each client" },
-        "approve": { "title": "Approval", "desc": "Clear one-step approval" },
-        "record": { "title": "Record", "desc": "Approval time and steps are stored" }
-      },
-      "footnote": "Approval records are kept organized to prevent confusion later."
-    }
-  },
-  "MobileApp": {
-    "badge": "Mobile app",
-    "title": "Crewset on your phone",
-    "description": "Manage on the go.",
-    "phone": {
-      "greeting": "Welcome back",
-      "contractsApproaching": "3 contracts are approaching renewal",
-      "upcoming": "Upcoming",
-      "contract1": "Acme Support",
-      "contract1Date": "Mar 12",
-      "contract2": "Globex Design",
-      "contract2Date": "Apr 5",
-      "contract3": "Initech Maintenance",
-      "contract3Date": "May 18",
-      "revenueAnalytics": "Revenue analytics"
-    }
+  "Tasks": {
+    "title": "Tasks",
+    "back": "Back to Tasks"
   },
   "Sidebar": {
     "dashboard": "Dashboard",

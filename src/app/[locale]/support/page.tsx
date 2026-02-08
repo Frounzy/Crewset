@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://crewset.app'
   const locale = params?.locale || 'en'
   const canonicalPath = `/${locale}/support`
-  const title = 'Destek | Crewset'
+  const title = 'Destek'
   const description = 'Sorularınız ve destek talepleriniz için Crewset ekibiyle iletişime geçin.'
   return {
     title,
