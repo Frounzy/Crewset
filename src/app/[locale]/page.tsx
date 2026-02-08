@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { getTranslations } from 'next-intl/server'
 import { Navbar } from '@/components/landing/navbar'
 import { Hero } from '@/components/landing/hero'
 import { Features } from '@/components/landing/features'
@@ -16,8 +17,9 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://crewset.app'
   const locale = params?.locale || 'en'
   const canonicalPath = `/${locale}`
-  const title = 'Crewset – Freelancer ve Ajanslar için Yenileme ve Gelir Koruması'
-  const description = 'Sözleşme yenilemelerini takip edin, riske giren geliri görün ve ilişkileri ölçekleyin. Crewset ile tekrarlayan geliriniz güvende.'
+  const t = await getTranslations('SEO.Home')
+  const title = t('title')
+  const description = t('description')
   return {
     title,
     description,

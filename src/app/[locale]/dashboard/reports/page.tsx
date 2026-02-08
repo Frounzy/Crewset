@@ -1,8 +1,4 @@
 import type { Metadata } from 'next'
-export const metadata: Metadata = {
-  title: 'Reports',
-  robots: { index: false, follow: false },
-}
 import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { ReportsClient } from './reports-client'
@@ -50,4 +46,13 @@ export default async function ReportsPage() {
       )}
     </div>
   )
+}
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const tSeo = await getTranslations('SEO.DashboardReports')
+  return {
+    title: tSeo('title'),
+    description: tSeo('description'),
+    robots: { index: false, follow: false },
+  }
 }

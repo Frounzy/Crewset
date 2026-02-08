@@ -1,8 +1,5 @@
 import type { Metadata } from 'next'
-export const metadata: Metadata = {
-  title: 'Billing',
-  robots: { index: false, follow: false },
-}
+import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { BillingClient } from './billing-client'
 
@@ -25,4 +22,13 @@ export default async function BillingPage() {
     .single()
 
   return <BillingClient subscription={subscription} profile={profile} />
+}
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const tSeo = await getTranslations('SEO.DashboardBilling')
+  return {
+    title: tSeo('title'),
+    description: tSeo('description'),
+    robots: { index: false, follow: false },
+  }
 }

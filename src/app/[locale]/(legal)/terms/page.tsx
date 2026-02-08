@@ -7,8 +7,9 @@ export async function generateMetadata({ params }: { params: { locale: string } 
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://crewset.app'
   const locale = params?.locale || 'en'
   const canonicalPath = `/${locale}/terms`
-  const title = 'Kullanım Şartları'
-  const description = 'Crewset platformunun kullanım koşulları ve yasal şartlar.'
+  const t = await getTranslations('SEO.Terms')
+  const title = t('title')
+  const description = t('description')
   return {
     title,
     description,

@@ -13,12 +13,13 @@ import { ActivityFeedClient, ActivityEvent } from './activity-feed-client'
 import Image from 'next/image'
 import { notFound } from 'next/navigation'
 
-export const metadata: Metadata = {
-  title: 'Dashboard',
-  robots: {
-    index: false,
-    follow: false,
-  },
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const t = await getTranslations('SEO.Dashboard')
+  return {
+    title: t('title'),
+    description: t('description'),
+    robots: { index: false, follow: false },
+  }
 }
 
 export default async function DashboardPage() {

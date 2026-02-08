@@ -1,12 +1,8 @@
 import type { Metadata } from 'next'
-export const metadata: Metadata = {
-  title: 'Profile',
-  robots: { index: false, follow: false },
-}
+import { getTranslations } from 'next-intl/server'
 import { createClient } from '@/lib/supabase/server'
 import { getAuthenticatedUser } from '@/lib/security/auth'
 import { ProfileClient } from './profile-client'
-import { getTranslations } from 'next-intl/server'
 
 export default async function ProfilePage() {
   const user = await getAuthenticatedUser()
@@ -55,4 +51,13 @@ export default async function ProfilePage() {
       />
     </div>
   )
+}
+
+export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
+  const tSeo = await getTranslations('SEO.DashboardProfile')
+  return {
+    title: tSeo('title'),
+    description: tSeo('description'),
+    robots: { index: false, follow: false },
+  }
 }

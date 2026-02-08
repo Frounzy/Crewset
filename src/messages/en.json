@@ -478,5 +478,66 @@
     "Refund": {
       "title": "Refund Policy"
     }
+  },
+  "SEO": {
+    "Layout": {
+      "title": "Crewset – Protect your recurring revenue",
+      "description": "Freelancer & Agency Contract Renewal and Revenue Protection platform."
+    },
+    "Home": {
+      "title": "Crewset – Protect your recurring revenue",
+      "description": "Track contract renewals, see revenue at risk early, and scale relationships."
+    },
+    "Login": {
+      "title": "Log in",
+      "description": "Access your Crewset account securely."
+    },
+    "Register": {
+      "title": "Create account",
+      "description": "Join Crewset to protect and grow your recurring revenue."
+    },
+    "Support": {
+      "title": "Support",
+      "description": "Get help from the Crewset team for questions and issues."
+    },
+    "Privacy": {
+      "title": "Privacy Policy",
+      "description": "Crewset privacy policy and information about personal data processing."
+    },
+    "Terms": {
+      "title": "Terms of Service",
+      "description": "Usage terms and legal conditions for using Crewset."
+    },
+    "Feedback": {
+      "title": "Leave Feedback",
+      "description": "Share your feedback securely with a one-time link."
+    },
+    "PublicProfile": {
+      "description": "Portfolio and public profile of {name}."
+    },
+    "Dashboard": {
+      "title": "Dashboard",
+      "description": "Overview of contracts, renewals and revenue performance."
+    },
+    "DashboardProfile": {
+      "title": "Profile",
+      "description": "Manage your public profile and portfolio."
+    },
+    "DashboardClients": {
+      "title": "Clients",
+      "description": "Manage client records and relationships."
+    },
+    "DashboardContracts": {
+      "title": "Contracts",
+      "description": "Track contract terms, renewal dates and status."
+    },
+    "DashboardBilling": {
+      "title": "Billing",
+      "description": "Manage subscription and invoice details."
+    },
+    "DashboardReports": {
+      "title": "Reports",
+      "description": "Understand revenue trends and contract performance."
+    }
   }
 }

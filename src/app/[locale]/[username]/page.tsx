@@ -22,9 +22,11 @@ export async function generateMetadata({ params }: { params: { username: string,
   const usernameParam = (params?.username || '').trim()
   const locale = params?.locale || 'en'
   const canonicalPath = `/${locale}/${usernameParam}`
+  const { getTranslations } = await import('next-intl/server')
+  const tSeo = await getTranslations('SEO.PublicProfile')
   const displayName = usernameParam || 'Profil'
   const title = displayName
-  const description = `${displayName} tarafından paylaşılan portföy ve bilgiler. Crewset ile müşteriler ve sözleşmeler tek yerde.`
+  const description = tSeo('description', { name: displayName })
   return {
     title,
     description,

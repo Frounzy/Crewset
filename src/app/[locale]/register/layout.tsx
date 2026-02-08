@@ -3,8 +3,10 @@ import type { Metadata } from 'next'
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const locale = params?.locale || 'en'
   const canonicalPath = `/${locale}/register`
-  const title = 'Kayıt Ol'
-  const description = 'Crewset’e katılın, sözleşme yenilemelerinizi ve tekrarlayan gelirinizi güvenceye alın.'
+  const { getTranslations } = await import('next-intl/server')
+  const t = await getTranslations('SEO.Register')
+  const title = t('title')
+  const description = t('description')
   return {
     title,
     description,

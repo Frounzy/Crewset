@@ -513,5 +513,66 @@
   "Tasks": {
     "title": "Görevler",
     "back": "Görevlere Dön"
+  },
+  "SEO": {
+    "Layout": {
+      "title": "Crewset – Tekrarlayan Gelirini Koru",
+      "description": "Freelancer ve Ajanslar için Sözleşme Yenileme ve Gelir Koruma platformu."
+    },
+    "Home": {
+      "title": "Crewset – Tekrarlayan Gelirini Koru",
+      "description": "Sözleşme yenilemelerini takip et, riske giren geliri erkenden gör ve ilişkileri ölçekle."
+    },
+    "Login": {
+      "title": "Giriş Yap",
+      "description": "Crewset hesabına güvenle eriş."
+    },
+    "Register": {
+      "title": "Kayıt Ol",
+      "description": "Crewset’e katıl, tekrarlayan gelirini koru ve büyüt."
+    },
+    "Support": {
+      "title": "Destek",
+      "description": "Soruların ve sorunların için Crewset ekibiyle iletişime geç."
+    },
+    "Privacy": {
+      "title": "Gizlilik Politikası",
+      "description": "Crewset gizlilik politikası ve kişisel verilerin işlenmesi hakkında bilgiler."
+    },
+    "Terms": {
+      "title": "Kullanım Şartları",
+      "description": "Crewset’i kullanırken geçerli olan kullanım koşulları ve yasal şartlar."
+    },
+    "Feedback": {
+      "title": "Geri Bildirim",
+      "description": "Tek kullanımlık güvenli bağlantı ile geri bildirim paylaş."
+    },
+    "PublicProfile": {
+      "description": "{name} kullanıcısının portföyü ve herkese açık profili."
+    },
+    "Dashboard": {
+      "title": "Panel",
+      "description": "Sözleşmeler, yenilemeler ve gelir performansına genel bakış."
+    },
+    "DashboardProfile": {
+      "title": "Profil",
+      "description": "Herkese açık profilini ve portföyünü yönet."
+    },
+    "DashboardClients": {
+      "title": "Müşteriler",
+      "description": "Müşteri kayıtlarını ve ilişkileri yönet."
+    },
+    "DashboardContracts": {
+      "title": "Sözleşmeler",
+      "description": "Sözleşme şartlarını, bitiş tarihlerini ve durumları takip et."
+    },
+    "DashboardBilling": {
+      "title": "Faturalama",
+      "description": "Abonelik ve fatura bilgilerini yönet."
+    },
+    "DashboardReports": {
+      "title": "Raporlar",
+      "description": "Gelir trendlerini ve sözleşme performansını analiz et."
+    }
   }
 }

@@ -4,6 +4,7 @@ import "../globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
+import { getTranslations } from 'next-intl/server';
 import { Toaster } from "@/components/ui/toaster";
 
 const geistSans = Geist({
@@ -19,8 +20,9 @@ const geistMono = Geist_Mono({
 export async function generateMetadata({ params }: { params: { locale: string } }): Promise<Metadata> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://crewset.app'
   const locale = params?.locale || 'en'
-  const title = "Crewset - Protect your recurring revenue"
-  const description = "Freelancer & Agency Contract Renewal and Revenue Protection platform."
+  const t = await getTranslations('SEO.Layout')
+  const title = t('title')
+  const description = t('description')
   const canonicalPath = `/${locale}`
   return {
     metadataBase: new URL(baseUrl),
