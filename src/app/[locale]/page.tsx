@@ -4,7 +4,7 @@ import { Navbar } from '@/components/landing/navbar'
 import { Hero } from '@/components/landing/hero'
 import { Features } from '@/components/landing/features'
 import { Pricing } from '@/components/landing/pricing'
-import { EarlyAccessSection } from '@/components/landing/early-access'
+// import { EarlyAccessSection } from '@/components/landing/early-access' // Kaldırıldı
 import { FAQ } from '@/components/landing/faq'
 import { Footer } from '@/components/landing/footer'
 import { PortfolioSection } from '@/components/landing/portfolio-section'
@@ -124,8 +124,7 @@ export default async function Home() {
         <HowItWorksSection />
         <Features />
         <MobileAppSection />
-        {/* Pricing kaldırıldı; yerine Erken Erişim alanı eklendi */}
-        <EarlyAccessSection />
+        <Pricing />
         <FAQ />
       </main>
       <Footer />
