@@ -62,9 +62,9 @@ export function ContractsClient({ contracts, clients, subscriptionPlan }: Contra
       )}
       {contracts.length === 0 ? (
         <div className="grid gap-6">
-          <div className="border-2 border-dashed rounded-lg p-10 text-center">
-            <h3 className="text-xl font-semibold mb-2">Sözleşme ekleyerek takibi başlat</h3>
-            <p className="text-muted-foreground mb-6">
+          <div className="border-2 border-dashed rounded-lg p-6 sm:p-10 text-center">
+            <h3 className="text-lg sm:text-xl font-semibold mb-2">Sözleşme ekleyerek takibi başlat</h3>
+            <p className="text-muted-foreground mb-4 sm:mb-6">
               Sözleşmeler bitiş tarihlerini, yenileme olasılığını ve gelir risklerini otomatik olarak hesaplamanı sağlar.
             </p>
             <div className="flex items-center justify-center mb-3">

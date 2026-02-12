@@ -66,7 +66,7 @@ export default function UpdatePasswordPage() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-muted/40 p-4">
+    <div className="flex items-center justify-center min-h-screen bg-muted/40 p-4 sm:p-6 md:p-8">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">Update password</CardTitle>

@@ -264,9 +264,9 @@ export default async function DashboardPage() {
       </div>
       {activeContracts.length === 0 && (
         <div className="grid gap-6">
-          <div className="border-2 border-dashed rounded-lg p-10 text-center">
-            <h3 className="text-xl font-semibold mb-2">Henüz hiçbir verin yok — ama başlamak çok kolay.</h3>
-            <p className="text-muted-foreground mb-6">
+          <div className="border-2 border-dashed rounded-lg p-6 sm:p-10 text-center">
+            <h3 className="text-lg sm:text-xl font-semibold mb-2">Henüz hiçbir verin yok — ama başlamak çok kolay.</h3>
+            <p className="text-muted-foreground mb-4 sm:mb-6">
               İlk müşterini ve sözleşmeni eklediğinde Crewset, gelirini takip etmeye ve yaklaşan riskler için seni otomatik olarak uyarmaya başlar.
             </p>
             <div className="flex items-center justify-center mb-3">

@@ -68,7 +68,7 @@
      <Card className="w-full bg-background border-border">
        <CardHeader>
          <CardTitle>Overview</CardTitle>
-         <div className="mt-3 flex flex-col sm:flex-row gap-3">
+         <div className="mt-3 flex flex-wrap gap-3">
            <div className="flex items-center gap-2">
              <span className="text-sm text-muted-foreground">Metrik</span>
              <Select value={metric} onValueChange={(v) => v && setMetric(v)}>

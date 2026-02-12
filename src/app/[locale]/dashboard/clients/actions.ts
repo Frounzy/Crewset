@@ -164,6 +164,6 @@ export async function createFeedbackLinkAction(clientId: string) {
   const cookieStore = await cookies()
   const rawLocale = cookieStore.get('NEXT_LOCALE')?.value || 'tr'
   const locale = ['en', 'tr'].includes(rawLocale) ? rawLocale : 'tr'
-  const url = `/${locale}/feedback/${data.token}`
+  const url = `https://crewset.com.tr/${locale}/feedback/${data.token}`
   return { success: 'Feedback link created', url }
 }

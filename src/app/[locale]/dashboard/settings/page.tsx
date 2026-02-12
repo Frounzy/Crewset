@@ -34,8 +34,8 @@ export default async function SettingsPage() {
                 <CardDescription>{t('description')}</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                    <div className="space-y-1">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
+                    <div className="space-y-1 mb-4 sm:mb-0">
                         <p className="font-medium">{t('theme')}</p>
                         <p className="text-sm text-muted-foreground">{t('light')} / {t('dark')} / {t('system')}</p>
                     </div>
@@ -51,7 +51,7 @@ export default async function SettingsPage() {
             </CardHeader>
             <form action={saveContractTemplate}>
               <CardContent className="space-y-4">
-                <Textarea name="contract_template" defaultValue={profile?.contract_template || ''} className="min-h-[220px]" placeholder="Sözleşme metninizi buraya yazın..." />
+                <Textarea name="contract_template" defaultValue={profile?.contract_template || ''} className="min-h-[150px] sm:min-h-[220px]" placeholder="Sözleşme metninizi buraya yazın..." />
               </CardContent>
               <CardFooter>
                 <Button type="submit">Kaydet</Button>
@@ -65,8 +65,8 @@ export default async function SettingsPage() {
                 <CardDescription>{t('dangerZoneDesc') || 'Irreversible actions for your account.'}</CardDescription>
             </CardHeader>
             <CardContent>
-                <div className="flex items-center justify-between">
-                    <div className="space-y-1">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
+                    <div className="space-y-1 mb-4 sm:mb-0">
                         <p className="font-medium">{t('deleteAccount') || 'Delete Account'}</p>
                         <p className="text-sm text-muted-foreground">{t('deleteAccountDesc') || 'Permanently delete your account and all of your content.'}</p>
                     </div>

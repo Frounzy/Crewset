@@ -100,8 +100,8 @@ export function TasksClient({ tasks, currentUserId, members = [], contracts = []
  
    return (
      <div className="flex-1 space-y-6">
-       <div className="flex items-center justify-between">
-        <h2 className="text-3xl font-bold tracking-tight">Görevler</h2>
+       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
+        <h2 className="text-3xl font-bold tracking-tight mb-4 sm:mb-0">Görevler</h2>
         <div className="flex items-center gap-2">
           <TaskDialog members={members} contracts={contracts} onCreated={(t) => setItems((prev) => [t as Task, ...prev])} />
           <Button variant="destructive" onClick={resetAll} disabled={isPending}>Görevleri Sıfırla</Button>
@@ -137,7 +137,7 @@ export function TasksClient({ tasks, currentUserId, members = [], contracts = []
            </CardHeader>
            <CardContent className="space-y-3">
             {assignedToMe.slice(0, 10).map((t) => (
-               <div key={t.id} className="flex items-center gap-3 p-2 rounded-lg border hover:border-primary/40 transition-colors">
+               <div key={t.id} className="flex flex-wrap items-center gap-3 p-2 rounded-lg border hover:border-primary/40 transition-colors">
                 {orgLogos[(t as any).organization_id] ? (
                   <div className="relative h-8 w-8 rounded-full overflow-hidden ring-1 ring-border">
                     <Image src={orgLogos[(t as any).organization_id] as string} alt="Org" fill className="object-cover" />
@@ -176,7 +176,7 @@ export function TasksClient({ tasks, currentUserId, members = [], contracts = []
            </CardHeader>
            <CardContent className="space-y-3">
             {upcoming.slice(0, 10).map((t) => (
-               <div key={t.id} className="flex items-center gap-3 p-2 rounded-lg border hover:border-primary/40 transition-colors">
+               <div key={t.id} className="flex flex-wrap items-center gap-3 p-2 rounded-lg border hover:border-primary/40 transition-colors">
                 {orgLogos[(t as any).organization_id] ? (
                   <div className="relative h-8 w-8 rounded-full overflow-hidden ring-1 ring-border">
                     <Image src={orgLogos[(t as any).organization_id] as string} alt="Org" fill className="object-cover" />
@@ -212,12 +212,12 @@ export function TasksClient({ tasks, currentUserId, members = [], contracts = []
  
        <div className="grid gap-4">
          <Card>
-           <CardHeader className="flex items-center justify-between">
-             <CardTitle>Tüm Görevler</CardTitle>
-             <div className="flex items-center gap-2">
-               <Input placeholder="Ara..." value={query} onChange={(e) => setQuery(e.target.value)} className="w-48" />
+           <CardHeader className="flex flex-col sm:flex-row items-start sm:items-center justify-between">
+             <CardTitle className="mb-4 sm:mb-0">Tüm Görevler</CardTitle>
+             <div className="flex items-center gap-2 w-full sm:w-auto">
+               <Input placeholder="Ara..." value={query} onChange={(e) => setQuery(e.target.value)} className="flex-1 sm:flex-initial sm:w-48" />
                <Select value={statusFilter} onValueChange={(v) => setStatusFilter(v as any)}>
-                 <SelectTrigger className="w-40">
+                 <SelectTrigger className="flex-1 sm:flex-initial sm:w-40">
                    <SelectValue placeholder="Durum" />
                  </SelectTrigger>
                  <SelectContent>
@@ -230,7 +230,7 @@ export function TasksClient({ tasks, currentUserId, members = [], contracts = []
            </CardHeader>
            <CardContent className="space-y-2">
            {filtered.map((t) => (
-               <div key={t.id} className="flex items-center gap-3 p-2 rounded-lg border hover:border-primary/40 transition-colors">
+               <div key={t.id} className="flex flex-wrap items-center gap-3 p-2 rounded-lg border hover:border-primary/40 transition-colors">
                  {orgLogos[(t as any).organization_id] && (
                    <div className="relative h-6 w-6 rounded-full overflow-hidden ring-1 ring-border">
                      <Image src={orgLogos[(t as any).organization_id] as string} alt="Org" fill className="object-cover" />

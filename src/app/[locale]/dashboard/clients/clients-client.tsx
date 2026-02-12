@@ -25,9 +25,9 @@ export function ClientsClient({ clients, subscriptionPlan }: ClientsClientProps)
       </div>
       {clients.length === 0 ? (
         <div className="grid gap-6">
-          <div className="border-2 border-dashed rounded-lg p-10 text-center">
-            <h3 className="text-xl font-semibold mb-2">Müşterilerin burada listelenir</h3>
-            <p className="text-muted-foreground mb-6">
+          <div className="border-2 border-dashed rounded-lg p-6 sm:p-10 text-center">
+            <h3 className="text-lg sm:text-xl font-semibold mb-2">Müşterilerin burada listelenir</h3>
+            <p className="text-muted-foreground mb-4 sm:mb-6">
               Tüm müşterilerini tek bir yerde topla, sözleşmelerini ve görevlerini karışıklık yaşamadan yönet.
             </p>
             <div className="flex items-center justify-center mb-3">

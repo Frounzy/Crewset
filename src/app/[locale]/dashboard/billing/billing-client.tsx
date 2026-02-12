@@ -267,7 +267,7 @@ export function BillingClient({ subscription, profile }: BillingClientProps) {
                 <CardDescription>{t('billingInfoDesc') || 'Enter your company details for invoices.'}</CardDescription>
             </CardHeader>
             <CardContent>
-                <form action={onSaveBillingInfo} className="grid gap-4 md:grid-cols-2">
+                <form action={onSaveBillingInfo} className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
                         <Label htmlFor="billing_company_name">{t('companyName') || 'Company Name'}</Label>
                         <Input id="billing_company_name" name="billing_company_name" defaultValue={profile?.billing_company_name} placeholder="Acme Inc." />
